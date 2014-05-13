@@ -2,7 +2,7 @@ package communication;
 
 import java.io.InputStream;
 
-import javax.xml.crypto.dsig.XMLObject;
+//import javax.xml.crypto.dsig.XMLObject;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
