@@ -3,19 +3,7 @@ package objects;
 /**
  * Represents a cell in a grid.
  */
-public class Cell {
-	/**
-	 * The ID of this cell.
-	 */
-	private int cellID;
-	/**
-	 * The x-coordinate of the cell in a grid.
-	 */	
-	private int x;
-	/**
-	 * The y-coordinate of the cell in a grid.
-	 */
-	private int y;
+public class Cell extends GridPoint {
 	/**
 	 * Whether a cell is accessible from the top when viewing the 0,0 coordinates
 	 * of the grid as the lower left corner.
@@ -61,7 +49,7 @@ public class Cell {
 	 */
 	private int maxWeight;
 	/**
-	 * The maximal diameter in centimeter of an object which can acces the cell.
+	 * The maximal diameter in millimeter of an object which can access the cell.
 	 */
 	private int maxDiameter;
 	
@@ -85,181 +73,160 @@ public class Cell {
 	}
 
 	/**
-	 * @return The ID of this cell.
-	 */
-	public int getCellID() {
-		return cellID;
-	}
-
-	/**
-	 * @param cellID The ID of this cell.
-	 */
-	public void setCellID(int cellID) {
-		this.cellID = cellID;
-	}
-	
-	/**
-	 * @return The x-coordinate of the cell in a grid.
-	 */
-	public int getX() {
-		return x;
-	}
-
-	/**
-	 * @param x The x-coordinate of the cell in a grid.
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return The y-coordinate of the cell in a grid.
-	 */
-	public int getY() {
-		return y;
-	}
-
-	/**
-	 * @param y The y-coordinate of the cell in a grid.
-	 */
-	public void setY(int y) {
-	}
-
-	/**
-	 * @return the accessibleFromUp
+	 * @return 	Whether a cell is accessible from the top when viewing the 0,0
+	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromUp() {
 		return accessibleFromUp;
 	}
 
 	/**
-	 * @param accessibleFromUp the accessibleFromUp to set
+	 * @param accessibleFromUp Whether a cell is accessible from the top when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public void setAccessibleFromUp(boolean accessibleFromUp) {
 		this.accessibleFromUp = accessibleFromUp;
 	}
 
 	/**
-	 * @return the accessibleFromRight
+	 * @return 	Whether a cell is accessible from the right when viewing the 0,0
+	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromRight() {
 		return accessibleFromRight;
 	}
 
 	/**
-	 * @param accessibleFromRight the accessibleFromRight to set
+	 * @param accessibleFromUp Whether a cell is accessible from the right when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public void setAccessibleFromRight(boolean accessibleFromRight) {
 		this.accessibleFromRight = accessibleFromRight;
 	}
 
 	/**
-	 * @return the accessibleFromDown
+	 * @return 	Whether a cell is accessible from the bottom when viewing the 0,0
+	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromDown() {
 		return accessibleFromDown;
 	}
 
 	/**
-	 * @param accessibleFromDown the accessibleFromDown to set
+	 * @param accessibleFromUp Whether a cell is accessible from the bottom when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public void setAccessibleFromDown(boolean accessibleFromDown) {
 		this.accessibleFromDown = accessibleFromDown;
 	}
 
 	/**
-	 * @return the accessibleFromLeft
+	 * @return 	Whether a cell is accessible from the left when viewing the 0,0
+	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromLeft() {
 		return accessibleFromLeft;
 	}
 
 	/**
-	 * @param accessibleFromLeft the accessibleFromLeft to set
+	 * @param accessibleFromUp Whether a cell is accessible from the left when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public void setAccessibleFromLeft(boolean accessibleFromLeft) {
 		this.accessibleFromLeft = accessibleFromLeft;
 	}
 
 	/**
-	 * @return the slopeInDegreesFromUp
+	 * @return The slope in degrees when the cell is accessed from the top when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public int getSlopeInDegreesFromUp() {
 		return slopeInDegreesFromUp;
 	}
 
 	/**
-	 * @param slopeInDegreesFromUp the slopeInDegreesFromUp to set
+	 * @param slopeInDegreesFromUp The slope in degrees when the cell is accessed
+	 * from the top when viewing the 0,0 coordinates of the grid as the lower left
+	 * corner.
 	 */
 	public void setSlopeInDegreesFromUp(int slopeInDegreesFromUp) {
 		this.slopeInDegreesFromUp = slopeInDegreesFromUp;
 	}
 
 	/**
-	 * @return the slopeInDegreesFromRight
+	 * @return The slope in degrees when the cell is accessed from the right when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public int getSlopeInDegreesFromRight() {
 		return slopeInDegreesFromRight;
 	}
 
 	/**
-	 * @param slopeInDegreesFromRight the slopeInDegreesFromRight to set
+	 * @param slopeInDegreesFromRight The slope in degrees when the cell is accessed
+	 * from the right when viewing the 0,0 coordinates of the grid as the lower left
+	 * corner.
 	 */
 	public void setSlopeInDegreesFromRight(int slopeInDegreesFromRight) {
 		this.slopeInDegreesFromRight = slopeInDegreesFromRight;
 	}
 
 	/**
-	 * @return the slopeInDegreesFromDown
+	 * @return The slope in degrees when the cell is accessed from the bottom when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public int getSlopeInDegreesFromDown() {
 		return slopeInDegreesFromDown;
 	}
 
 	/**
-	 * @param slopeInDegreesFromDown the slopeInDegreesFromDown to set
+	 * @param slopeInDegreesFromDown The slope in degrees when the cell is accessed
+	 * from the bottom when viewing the 0,0 coordinates of the grid as the lower left
+	 * corner.
 	 */
 	public void setSlopeInDegreesFromDown(int slopeInDegreesFromDown) {
 		this.slopeInDegreesFromDown = slopeInDegreesFromDown;
 	}
 
 	/**
-	 * @return the slopeInDegreesFromLeft
+	 * @return The slope in degrees when the cell is accessed from the left when
+	 * viewing the 0,0 coordinates of the grid as the lower left corner.
 	 */
 	public int getSlopeInDegreesFromLeft() {
 		return slopeInDegreesFromLeft;
 	}
 
 	/**
-	 * @param slopeInDegreesFromLeft the slopeInDegreesFromLeft to set
+	 * @param slopeInDegreesFromLeft The slope in degrees when the cell is accessed
+	 * from the left when viewing the 0,0 coordinates of the grid as the lower left
+	 * corner.
 	 */
 	public void setSlopeInDegreesFromLeft(int slopeInDegreesFromLeft) {
 		this.slopeInDegreesFromLeft = slopeInDegreesFromLeft;
 	}
 
 	/**
-	 * @return the maxWeight
+	 * @return The maximal weight in gram with which the cell can be loaded.
 	 */
 	public int getMaxWeight() {
 		return maxWeight;
 	}
 
 	/**
-	 * @param maxWeight the maxWeight to set
+	 * @param maxWeight The maximal weight in gram with which the cell can be loaded.
 	 */
 	public void setMaxWeight(int maxWeight) {
 		this.maxWeight = maxWeight;
 	}
 
 	/**
-	 * @return the maxDiameter
+	 * @return The maximal diameter in millimeter of an object which can access the cell.
 	 */
 	public int getMaxDiameter() {
 		return maxDiameter;
 	}
 
 	/**
-	 * @param maxDiameter the maxDiameter to set
+	 * @param maxDiameter The maximal diameter in millimeter of an object which can access the cell.
 	 */
 	public void setMaxDiameter(int maxDiameter) {
 		this.maxDiameter = maxDiameter;
