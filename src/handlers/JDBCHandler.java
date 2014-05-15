@@ -30,7 +30,7 @@ public class JDBCHandler extends DatabaseHandler {
 				"TransportAgentID, " +
 				"MaxFramesMoveOneCellForward, MaxFramesMoveOneCellBackward, " + 
 			    "MaxFramesTurnClockwise90, MaxFramesTurnClockwise180, " +
-			    "MaxFramesTurnCounterClockwise90, MaxFramesTurnCounterClockwise180, " +
+			    "MaxFramesTurnCounterclockwise90, MaxFramesTurnCounterclockwise180, " +
 			    "Weight, Length, Width, Height, " +
 			    "MaxProductWeight, MaxProductLength, " +
 			    "MaxProductWidth, MaxProductHeight " +
@@ -47,7 +47,7 @@ public class JDBCHandler extends DatabaseHandler {
 			ps.setInt(3, transportAgent.getMaxFramesMoveOneCellBackward());
 			ps.setInt(4, transportAgent.getMaxFramesTurnClockwise90());
 			ps.setInt(5, transportAgent.getMaxFramesTurnClockwise180());
-			ps.setInt(6, transportAgent.getMaxFramesTurnCounterClockwise90());
+			ps.setInt(6, transportAgent.getMaxFramesTurnCounterclockwise90());
 			ps.setInt(7, transportAgent.getMaxFramesTurnCounterClockwise180());
 			ps.setInt(8, transportAgent.getWeight());
 			ps.setInt(9, transportAgent.getLength());
@@ -74,8 +74,8 @@ public class JDBCHandler extends DatabaseHandler {
 				"MaxFramesMoveOneCellForward=?, MaxFramesMoveOneCellBackward=?, " + 
 			    "MaxFramesTurnClockwise90=?, " +
 				"MaxFramesTurnClockwise180=?, " +
-			    "MaxFramesTurnCounterClockwise90=?, " +
-				"MaxFramesTurnCounterClockwise180=?, " +
+			    "MaxFramesTurnCounterclockwise90=?, " +
+				"MaxFramesTurnCounterclockwise180=?, " +
 			    "Weight=?, Length=?, Width=?, Height=?, " +
 			    "MaxProductWeight=?, MaxProductLength=?, " +
 			    "MaxProductWidth=?, MaxProductHeight=? " +
@@ -90,7 +90,7 @@ public class JDBCHandler extends DatabaseHandler {
 			ps.setInt(2, transportAgent.getMaxFramesMoveOneCellBackward());
 			ps.setInt(3, transportAgent.getMaxFramesTurnClockwise90());
 			ps.setInt(4, transportAgent.getMaxFramesTurnClockwise180());
-			ps.setInt(5, transportAgent.getMaxFramesTurnCounterClockwise90());
+			ps.setInt(5, transportAgent.getMaxFramesTurnCounterclockwise90());
 			ps.setInt(6, transportAgent.getMaxFramesTurnCounterClockwise180());
 			ps.setInt(7, transportAgent.getWeight());
 			ps.setInt(8, transportAgent.getLength());

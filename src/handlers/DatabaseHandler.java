@@ -2,6 +2,9 @@ package handlers;
 
 import java.sql.SQLException;
 
+import javax.jws.WebParam;
+import javax.jws.WebService;
+
 import objects.Cell;
 import objects.Route;
 import objects.TransportAgent;
@@ -10,6 +13,7 @@ import objects.TransportAgent;
  * Handles database connections and commands. Abstract class.
  *
  */
+@WebService
 public abstract class DatabaseHandler {
 	//private static Logger logger = Logger.getLogger(DatabaseHandler.class.getName());
 	protected static final String databaseName = "logistics";
@@ -21,21 +25,21 @@ public abstract class DatabaseHandler {
 		
 	}
 	
-	abstract public void addTransportAgent(TransportAgent transportAgent) throws SQLException;
+	abstract public void addTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
 	
-	abstract public void updateTransportAgent(TransportAgent transportAgent) throws SQLException;
+	abstract public void updateTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
 	
-	abstract public void removeTransportAgent(TransportAgent transportAgent) throws SQLException;
+	abstract public void removeTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
 	
-	abstract public void addCell(Cell cell) throws SQLException;
+	abstract public void addCell(@WebParam(name = "cell") Cell cell) throws SQLException;
 	
-	abstract public void updateCell(Cell cell) throws SQLException;
+	abstract public void updateCell(@WebParam(name = "cell") Cell cell) throws SQLException;
 	
-	abstract public void removeCell(Cell cell) throws SQLException;
+	abstract public void removeCell(@WebParam(name = "cell") Cell cell) throws SQLException;
 	
-	public abstract void addRoute(Route route);
+	public abstract void addRoute(@WebParam(name = "route") Route route);
 	
-	public abstract void updateRoute(Route route);
+	public abstract void updateRoute(@WebParam(name = "route") Route route);
 	
-	public abstract void removeRotue(Route route);
+	public abstract void removeRotue(@WebParam(name = "route") Route route);
 }
