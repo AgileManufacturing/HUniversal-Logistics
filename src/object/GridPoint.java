@@ -1,4 +1,4 @@
-package objects;
+package object;
 
 /**
  * Represents a point in a grid.

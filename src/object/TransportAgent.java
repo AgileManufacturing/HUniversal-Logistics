@@ -1,7 +1,7 @@
-package objects;
+package object;
 
 /**
- * Represents transport agent.
+ * Represents a transport agent.
  */
 public class TransportAgent {
 	/**

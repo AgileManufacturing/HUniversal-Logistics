@@ -1,5 +1,8 @@
-package objects;
+package object;
 
+/**
+ * Represents single timeframe of a {@link object.Route}.
+ */
 public class RoutePoint extends GridPoint {
 	/**
 	 * The timeframe in which a cell is occupied.

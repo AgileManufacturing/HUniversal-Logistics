@@ -1,4 +1,4 @@
-package objects;
+package object;
 
 /**
  * Represents a cell in a grid.
@@ -73,7 +73,7 @@ public class Cell extends GridPoint {
 	}
 
 	/**
-	 * @return 	Whether a cell is accessible from the top when viewing the 0,0
+	 * @return Whether a cell is accessible from the top when viewing the 0,0
 	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromUp() {
@@ -89,7 +89,7 @@ public class Cell extends GridPoint {
 	}
 
 	/**
-	 * @return 	Whether a cell is accessible from the right when viewing the 0,0
+	 * @return Whether a cell is accessible from the right when viewing the 0,0
 	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromRight() {
@@ -105,7 +105,7 @@ public class Cell extends GridPoint {
 	}
 
 	/**
-	 * @return 	Whether a cell is accessible from the bottom when viewing the 0,0
+	 * @return Whether a cell is accessible from the bottom when viewing the 0,0
 	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromDown() {
@@ -121,7 +121,7 @@ public class Cell extends GridPoint {
 	}
 
 	/**
-	 * @return 	Whether a cell is accessible from the left when viewing the 0,0
+	 * @return Whether a cell is accessible from the left when viewing the 0,0
 	 * coordinates of the grid as the lower left corner.
 	 */
 	public boolean isAccessibleFromLeft() {
