@@ -12,15 +12,14 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.sql.DataSource;
 
-import objects.Cell;
-import objects.Route;
-import objects.RoutePoint;
-import objects.TransportAgent;
+import object.Cell;
+import object.Route;
+import object.RoutePoint;
+import object.TransportAgent;
 
 /**
  * Handles database connections and commands.
  * For databases which can be used with the Java JDBC API.
- * 
  */
 @WebService
 public class JDBCHandler extends DatabaseHandler {

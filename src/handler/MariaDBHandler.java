@@ -12,7 +12,6 @@ import org.mariadb.jdbc.MySQLDataSource;
 
 /**
  * Handles database connections and commands for MariaDB.
- * 
  */
 @WebService
 public class MariaDBHandler extends JDBCHandler {
