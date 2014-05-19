@@ -4,6 +4,11 @@ public class RoutePoint extends GridPoint {
 	/**
 	 * The timeframe in which a cell is occupied.
 	 */
+	private int transportAgentID;
+	
+	/**
+	 * The timeframe in which a cell is occupied.
+	 */
 	private int timeframe;
 
 	/**
@@ -12,11 +17,26 @@ public class RoutePoint extends GridPoint {
 	 * @param y The y-coordinate of the cell.
 	 * @param timeframe The timeframe in which a cell is occupied.
 	 */
-	public RoutePoint(int cellID, int x, int y, int timeframe) {
-		this.cellID = cellID;
-		this.x = x;
-		this.y = y;
+	public RoutePoint(int transportAgentID, int timeframe, int cellID, int x, int y) {
+		this.transportAgentID = transportAgentID;
 		this.timeframe = timeframe;
+		this.setCellID(cellID);
+		this.setX(x);
+		this.setY(y);
+	}
+	
+	/**
+	 * @return The ID of the TransportAgent which occupies a cell.
+	 */
+	public int getTransportAgentID() {
+		return transportAgentID;
+	}
+	
+	/**
+	 * @param transportAgentID The ID of the TransportAgent which occupies a cell.
+	 */
+	public void setTransportAgentID(int transportAgentID) {
+		this.transportAgentID = transportAgentID;
 	}
 	
 	/**

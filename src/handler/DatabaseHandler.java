@@ -1,6 +1,7 @@
 package handler;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.jws.WebParam;
 import javax.jws.WebService;
@@ -26,21 +27,27 @@ public abstract class DatabaseHandler {
 		
 	}
 	
-	abstract public void addTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
+	abstract public void addTransportAgents(@WebParam(name = "transportAgents") List<TransportAgent> transportAgents) throws SQLException;
 	
-	abstract public void updateTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
+	abstract public void updateTransportAgents(@WebParam(name = "transportAgents") List<TransportAgent> transportAgents) throws SQLException;
+		
+	abstract public void removeTransportAgents(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs) throws SQLException;
 	
-	abstract public void removeTransportAgent(@WebParam(name = "transportAgent") TransportAgent transportAgent) throws SQLException;
+	abstract public List<TransportAgent> getTransportAgents(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs) throws SQLException;
 	
-	abstract public void addCell(@WebParam(name = "cell") Cell cell) throws SQLException;
+	abstract public void addCells(@WebParam(name = "cells") List<Cell> cells) throws SQLException;
 	
-	abstract public void updateCell(@WebParam(name = "cell") Cell cell) throws SQLException;
+	abstract public void updateCells(@WebParam(name = "cells") List<Cell> cells) throws SQLException;
+		
+	abstract public void removeCells(@WebParam(name = "cellIDs") List<Integer> cellIDs) throws SQLException;
 	
-	abstract public void removeCell(@WebParam(name = "cell") Cell cell) throws SQLException;
+	abstract public List<Cell> getCells(@WebParam(name = "cellIDs") List<Integer> cellIDs) throws SQLException;
 	
-	abstract public void addRoute(@WebParam(name = "route") Route route);
+	abstract public void addRoutes(@WebParam(name = "routes") List<Route> routes) throws SQLException;
 	
-	abstract public void updateRoute(@WebParam(name = "route") Route route);
+	abstract public void updateRoutes(@WebParam(name = "routes") List<Route> routes) throws SQLException;
 	
-	abstract public void removeRotue(@WebParam(name = "route") Route route);
+	abstract public void removeRoutes(@WebParam(name = "routes") List<Route> routes) throws SQLException;
+	
+	abstract public List<Route> getRoutes(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs) throws SQLException;
 }

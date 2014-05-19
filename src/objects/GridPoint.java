@@ -9,11 +9,11 @@ abstract public class GridPoint {
 	 */
 	protected int cellID;
 	/**
-	 * The x-coordinate of this point in a grid.
+	 * The x-coordinate of the point in a grid.
 	 */	
 	protected int x;
 	/**
-	 * The y-coordinate of this point in a grid.
+	 * The y-coordinate of the point in a grid.
 	 */
 	protected int y;
 	
@@ -32,28 +32,28 @@ abstract public class GridPoint {
 	}
 	
 	/**
-	 * @return The x-coordinate of this point in a grid.
+	 * @return The x-coordinate of the point in a grid.
 	 */
 	public int getX() {
 		return x;
 	}
 	
 	/**
-	 * @param x The x-coordinate of this point in a grid.
+	 * @param x The x-coordinate of the point in a grid.
 	 */
 	public void setX(int x) {
 		this.x = x;
 	}
 	
 	/**
-	 * @return The y-coordinate of this point in a grid.
+	 * @return The y-coordinate of the point in a grid.
 	 */
 	public int getY() {
 		return y;
 	}
 	
 	/**
-	 * @param y The y-coordinate of this point in a grid.
+	 * @param y The y-coordinate of the point in a grid.
 	 */
 	public void setY(int y) {
 		this.y = y;

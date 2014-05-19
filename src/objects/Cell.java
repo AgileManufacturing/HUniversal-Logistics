@@ -57,9 +57,6 @@ public class Cell extends GridPoint {
 	 * @param cellID The ID of this cell.
 	 */
 	public Cell(int CellID) {
-		this.cellID = CellID;
-		this.x = -1;
-		this.y = -1;
 		this.accessibleFromUp = false;
 		this.accessibleFromRight = false;
 		this.accessibleFromDown = false;
@@ -70,6 +67,9 @@ public class Cell extends GridPoint {
 		this.slopeInDegreesFromLeft = 0;
 		this.maxWeight = 0;
 		this.maxDiameter = 0;
+		this.setCellID(cellID);
+		this.setX(-1);
+		this.setY(-1);
 	}
 
 	/**

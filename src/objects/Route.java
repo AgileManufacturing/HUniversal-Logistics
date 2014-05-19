@@ -19,7 +19,7 @@ public class Route {
 	/**
 	 * @return the conflicts
 	 */
-	public GridPoint[] getConflicts() {
+	public RoutePoint[] getConflicts() {
 		return conflicts;
 	}
 	/**
