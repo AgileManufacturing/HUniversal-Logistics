@@ -13,7 +13,7 @@ public class DatabaseService extends Service {
 	public static void main(String[] args) {
 		// create and publish an endpoint
 		DatabaseHandler dh = new MariaDBHandler();
-		Endpoint.publish(serviceIP + ":" + servicePort, dh);
-		logger.info("DatabaseService published at " + serviceIP + ":" + servicePort);
+		Endpoint.publish(ip + ":" + port, dh);
+		logger.info("DatabaseService published at " + ip + ":" + port);
 	}
 }

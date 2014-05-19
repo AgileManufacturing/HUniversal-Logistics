@@ -1,8 +1,5 @@
 package handler;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Properties;
 import java.util.logging.Logger;
 
 import javax.jws.WebService;
@@ -25,19 +22,10 @@ public class MariaDBHandler extends JDBCHandler {
 	public MariaDBHandler() {
 		this.ds = new MySQLDataSource();
 		
-		Properties prop = new Properties();
-		
-		try {
-			prop.load(new FileInputStream(propertiesPath));
-		} catch (IOException e) {
-			logger.severe("Could not find or open configuration file " + propertiesPath);
-			logger.severe(e.getMessage());
-		}
-		
-		((MySQLDataSource) ds).setServerName(prop.getProperty("dbServerName"));
-		((MySQLDataSource) ds).setDatabaseName(prop.getProperty("databaseName"));
-		((MySQLDataSource) ds).setUser(prop.getProperty("dbUser"));
-		((MySQLDataSource) ds).setPassword(prop.getProperty("dbPassword"));
+		((MySQLDataSource) ds).setServerName(this.ip);
+		((MySQLDataSource) ds).setUser(this.user);
+		((MySQLDataSource) ds).setPassword(this.password);
+		((MySQLDataSource) ds).setDatabaseName(databaseName);
 		
 		try {
 			Context ctx = new InitialContext();
