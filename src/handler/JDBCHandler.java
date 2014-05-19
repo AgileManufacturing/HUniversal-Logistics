@@ -2,7 +2,9 @@ package handler;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -162,7 +164,62 @@ public class JDBCHandler extends DatabaseHandler {
 	
 	@Override
 	public List<TransportAgent> getTransportAgents(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs) throws SQLException {
-		return null;
+		List<TransportAgent> transportAgents = new ArrayList<TransportAgent>();
+		String s =
+				"select TransportAgentID, " +
+				"MaxFramesMoveOneCellForward, MaxFramesMoveOneCellBackward, " + 
+			    "MaxFramesTurnClockwise90, " +
+				"MaxFramesTurnClockwise180, " +
+			    "MaxFramesTurnCounterclockwise90, " +
+				"MaxFramesTurnCounterclockwise180, " +
+			    "Weight, Length, Width, Height, " +
+			    "MaxProductWeight, MaxProductLength, " +
+			    "MaxProductWidth, MaxProductHeight " +
+			    "from " + databaseName + "." + transportAgentsTable + " " +
+			    "where TransportAgentID=?;";
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			ps = con.prepareStatement(s);
+			for (Integer transportAgentID : transportAgentIDs) {
+				ps.setInt(1, transportAgentID);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			rs = ps.getGeneratedKeys();
+			while (rs.next()) {
+				TransportAgent transportAgent = new TransportAgent(rs.getInt("TransportAgentID"));
+				transportAgent.setMaxFramesMoveOneCellForward(rs.getInt("MaxFramesMoveOneCellForward"));
+				transportAgent.setMaxFramesMoveOneCellBackward(rs.getInt("MaxFramesMoveOneCellBackward"));
+				transportAgent.setMaxFramesTurnClockwise90(rs.getInt("MaxFramesTurnClockwise90"));
+				transportAgent.setMaxFramesTurnClockwise180(rs.getInt("MaxFramesTurnClockwise180"));
+				transportAgent.setMaxFramesTurnCounterclockwise90(rs.getInt("MaxFramesTurnCounterclockwise90"));
+				transportAgent.setMaxFramesTurnCounterclockwise180(rs.getInt("MaxFramesTurnCounterclockwise180"));
+				transportAgent.setWeight(rs.getInt("Weight"));
+				transportAgent.setLength(rs.getInt("Length"));
+				transportAgent.setWidth(rs.getInt("Width"));
+				transportAgent.setHeight(rs.getInt("Height"));
+				transportAgent.setMaxProductWeight(rs.getInt("MaxProductWeight"));
+				transportAgent.setMaxProductLength(rs.getInt("MaxProductLength"));
+				transportAgent.setMaxProductWidth(rs.getInt("MaxProductWidth"));
+				transportAgent.setMaxProductHeight(rs.getInt("MaxProductHeight"));
+				transportAgents.add(transportAgent);
+			}
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			con.rollback();
+			logger.severe("Could not get TranportAgent(s) from database: " + databaseName + " table: " + transportAgentsTable);
+			logger.severe(e.getMessage());
+			throw e;
+		} finally {
+			if (ps != null) { ps.close(); }
+		    if (con != null) { con.close(); }
+		}
+		return transportAgents;
 	}
 
 
@@ -292,7 +349,58 @@ public class JDBCHandler extends DatabaseHandler {
 	
 	@Override
 	public List<Cell> getCells(@WebParam(name = "cellIDs") List<Integer> cellIDs) throws SQLException {
-		return null;
+		List<Cell> cells = new ArrayList<Cell>();
+		String s =
+				"select CellID, " +
+				"X, Y, " +
+			    "AccessibleFromUp, AccessibleFromRight, " +
+				"AccessibleFromDown, AccessibleFromLeft, " +
+			    "SlopeInDegreesFromUp, SlopeInDegreesFromRight " +
+			    "SlopeInDegreesFromDown, SlopeInDegreesFromLeft " +
+			    "MaxWeight, MaxDiameter " +
+			    "from " + databaseName + "." + cellsTable + " " +
+			    "where CellID=?;";
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			ps = con.prepareStatement(s);
+			for (Integer cellID : cellIDs) {
+				ps.setInt(1, cellID);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			rs = ps.getGeneratedKeys();
+			while (rs.next()) {
+				Cell cell = new Cell(rs.getInt("CellID"));
+				cell.setX(rs.getInt("X"));
+				cell.setY(rs.getInt("Y"));
+				cell.setAccessibleFromUp(rs.getBoolean("AccessibleFromUp"));
+				cell.setAccessibleFromRight(rs.getBoolean("AccessibleFromRight"));
+				cell.setAccessibleFromDown(rs.getBoolean("AccessibleFromDown"));
+				cell.setAccessibleFromLeft(rs.getBoolean("AccessibleFromLeft"));
+				cell.setSlopeInDegreesFromUp(rs.getInt("SlopeInDegreesFromUp"));
+				cell.setSlopeInDegreesFromRight(rs.getInt("SlopeInDegreesFromRight"));
+				cell.setSlopeInDegreesFromDown(rs.getInt("SlopeInDegreesFromDown"));
+				cell.setSlopeInDegreesFromLeft(rs.getInt("SlopeInDegreesFromLeft"));
+				cell.setMaxWeight(rs.getInt("MaxWeight"));
+				cell.setMaxDiameter(rs.getInt("MaxDiameter"));
+				cells.add(cell);
+			}
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			con.rollback();
+			logger.severe("Could not get Cell(s) from database: " + databaseName + " table: " + cellsTable);
+			logger.severe(e.getMessage());
+			throw e;
+		} finally {
+			if (ps != null) { ps.close(); }
+		    if (con != null) { con.close(); }
+		}
+		return cells;
 	}
 
 	@Override
@@ -398,6 +506,61 @@ public class JDBCHandler extends DatabaseHandler {
 	
 	@Override
 	public List<Route> getRoutes(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs) throws SQLException {
-		return null;
+		List<Route> routes = new ArrayList<Route>();
+		String s =
+				"select " +
+				routesTable + ".TransportAgentID, " +
+				routesTable + ".Timeframe, " +
+				routesTable + ".CellID, " + 
+				cellsTable + ".X, " +
+				cellsTable + ".Y " +
+			    "from " + databaseName + "." + routesTable + " " +
+				"inner join " + databaseName + "." + cellsTable + " " +
+			    "on " + databaseName + "." + routesTable + ".CellID" +
+			    "=" + databaseName + "." + routesTable + ".CellID " +
+			    "where TransportAgentID=?;";
+		
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		try {
+			con = ds.getConnection();
+			con.setAutoCommit(false);
+			ps = con.prepareStatement(s);
+			for (Integer transportAgentID : transportAgentIDs) {
+				ps.setInt(1, transportAgentID);
+				ps.addBatch();
+			}
+			ps.executeBatch();
+			rs = ps.getGeneratedKeys();
+			int currentTransportAgentID = -1;
+			Route currentRoute = null;
+			while (rs.next()) {
+				if (rs.getInt("TransportAgentID") != currentTransportAgentID) {
+					if (currentRoute != null) {
+						routes.add(currentRoute);
+					}
+					currentTransportAgentID = rs.getInt("TransportAgentID");
+					currentRoute = new Route();
+				}
+				currentRoute.getRoute().add(new RoutePoint(
+						rs.getInt("TransportAgentID"),
+						rs.getInt("Timeframe"),
+						rs.getInt("CellID"),
+						rs.getInt("X"),
+						rs.getInt("Y")
+						));
+			}
+			con.setAutoCommit(true);
+		} catch (SQLException e) {
+			con.rollback();
+			logger.severe("Could not get Route(s) from database: " + databaseName + " table: " + routesTable + " and " + cellsTable);
+			logger.severe(e.getMessage());
+			throw e;
+		} finally {
+			if (ps != null) { ps.close(); }
+		    if (con != null) { con.close(); }
+		}
+		return routes;
 	}
 }

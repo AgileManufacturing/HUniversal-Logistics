@@ -1,31 +1,33 @@
 package objects;
 
+import java.util.List;
+
 public class Route {
-	private RoutePoint[] route;
-	private RoutePoint[] conflicts;
+	private List<RoutePoint> route;
+	private List<RoutePoint> conflicts;
 	private boolean hasConflicts;
 	/**
 	 * @return the route
 	 */
-	public RoutePoint[] getRoute() {
+	public List<RoutePoint> getRoute() {
 		return route;
 	}
 	/**
 	 * @param route the route to set
 	 */
-	public void setRoute(RoutePoint[] route) {
+	public void setRoute(List<RoutePoint> route) {
 		this.route = route;
 	}
 	/**
 	 * @return the conflicts
 	 */
-	public RoutePoint[] getConflicts() {
+	public List<RoutePoint> getConflicts() {
 		return conflicts;
 	}
 	/**
 	 * @param conflicts the conflicts to set
 	 */
-	public void setConflicts(RoutePoint[] conflicts) {
+	public void setConflicts(List<RoutePoint> conflicts) {
 		this.conflicts = conflicts;
 	}
 	/**
