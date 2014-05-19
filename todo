@@ -1,0 +1,8 @@
+DatabaseHandler, JDBCHandler, MariaDBHandler need default constructor (webservice)
+	add connect() method?
+Connection pool
+JDBI connect
+Move JDBI connect / datasource to Tomcat configuration
+Get method for all objects
+Add add/update/remove/get of multiple objects with one call
+Database diagram + verslag aanpassen/uitbreiden (update tabellen)

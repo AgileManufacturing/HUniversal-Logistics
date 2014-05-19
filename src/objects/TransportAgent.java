@@ -156,9 +156,8 @@ public class TransportAgent {
 	/**
 	 * @param maxFramesTurnCounterclockwise90 The maximal amount of timeframes it takes to turn 90 degrees counterclockwise.
 	 */
-	public void setMaxFramesTurnCounterClockwise90(
-			int maxFramesTurnCounterClockwise90) {
-		this.maxFramesTurnCounterclockwise90 = maxFramesTurnCounterClockwise90;
+	public void setMaxFramesTurnCounterclockwise90(int maxFramesTurnCounterclockwise90) {
+		this.maxFramesTurnCounterclockwise90 = maxFramesTurnCounterclockwise90;
 	}
 
 	/**
