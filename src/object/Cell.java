@@ -53,23 +53,25 @@ public class Cell extends GridPoint {
 	 */
 	private int maxDiameter;
 	
+	public Cell() {
+		this(-1, -1, -1);
+	}
+	
 	/**
 	 * @param cellID The ID of this cell.
 	 */
-	public Cell(int CellID) {
-		this.accessibleFromUp = false;
-		this.accessibleFromRight = false;
-		this.accessibleFromDown = false;
-		this.accessibleFromLeft = false;
-		this.slopeInDegreesFromUp = 0;
-		this.slopeInDegreesFromRight = 0;
-		this.slopeInDegreesFromDown = 0;
-		this.slopeInDegreesFromLeft = 0;
-		this.maxWeight = 0;
-		this.maxDiameter = 0;
-		this.setCellID(cellID);
-		this.setX(-1);
-		this.setY(-1);
+	public Cell(int CellID, int x, int y) {
+		super();
+		this.setAccessibleFromUp(false);
+		this.setAccessibleFromRight(false);
+		this.setAccessibleFromDown(false);
+		this.setAccessibleFromLeft(false);
+		this.setSlopeInDegreesFromUp(0);
+		this.setSlopeInDegreesFromRight(0);
+		this.setSlopeInDegreesFromDown(0);
+		this.setSlopeInDegreesFromLeft(0);
+		this.setMaxWeight(0);
+		this.setMaxDiameter(0);
 	}
 
 	/**

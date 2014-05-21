@@ -65,22 +65,39 @@ public class TransportAgent {
 	 */
 	private int maxProductHeight;
 	
+	/**
+	 * param transportAgentID The ID of the transport agent.
+	 */	
+	public TransportAgent() {
+		this(-1);
+	}
+	
+	/**
+	 * param transportAgentID The ID of the transport agent.
+	 */	
 	public TransportAgent(int transportAgentID) {
+		this.setTransportAgentID(transportAgentID);
+		this.setMaxFramesMoveOneCellForward(-1);
+		this.setMaxFramesMoveOneCellBackward(-1);
+		this.setMaxFramesTurnClockwise90(-1);
+		this.setMaxFramesTurnClockwise180(-1);
+		this.setMaxFramesTurnCounterclockwise90(-1);
+		this.setMaxFramesTurnCounterclockwise180(-1);
+		this.setWeight(-1);
+		this.setLength(-1);
+		this.setWidth(-1);
+		this.setHeight(-1);
+		this.setMaxProductWeight(-1);
+		this.setMaxProductLength(-1);
+		this.setMaxProductWidth(-1);
+		this.setMaxProductHeight(-1);
+	}
+	
+	/**
+	 * param transportAgentID The ID of the transport agent.
+	 */	
+	public void setTransportAgentID(int transportAgentID) {
 		this.transportAgentID = transportAgentID;
-		this.maxFramesMoveOneCellForward = -1;
-		this.maxFramesMoveOneCellBackward = -1;
-		this.maxFramesTurnClockwise90 = -1;
-		this.maxFramesTurnClockwise180 = -1;
-		this.maxFramesTurnCounterclockwise90 = -1;
-		this.maxFramesTurnCounterclockwise180 = -1;
-		this.weight = -1;
-		this.length = -1;
-		this.width = -1;
-		this.height = -1;
-		this.maxProductWeight = -1;
-		this.maxProductLength = -1;
-		this.maxProductWidth = -1;
-		this.maxProductHeight = -1;
 	}
 	
 	/**

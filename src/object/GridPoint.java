@@ -17,6 +17,16 @@ abstract public class GridPoint {
 	 */
 	protected int y;
 	
+	public GridPoint() {
+		this(-1, -1, -1);
+	}
+	
+	public GridPoint(int setCellID, int x, int y) {
+		this.setCellID(setCellID);
+		this.setX(x);
+		this.setY(y);
+	}
+	
 	/**
 	 * @return The ID of the cell at this point.
 	 */

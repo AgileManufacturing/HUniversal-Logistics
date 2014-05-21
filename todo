@@ -1,3 +1,2 @@
-Connection pool
-JDBI connect
-Move JDBI connect / datasource to Tomcat configuration
+Use Axis2 to return/receive Java objects
+Use pooled connections
