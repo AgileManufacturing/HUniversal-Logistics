@@ -1,0 +1,3 @@
+Connection pool
+JDBI connect
+Move JDBI connect / datasource to Tomcat configuration

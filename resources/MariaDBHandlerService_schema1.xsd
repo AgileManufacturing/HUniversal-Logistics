@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://handler/" xmlns:tns="http://handler/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="SQLException" type="tns:SQLException"/>
+
+  <xs:element name="addCells" type="tns:addCells"/>
+
+  <xs:element name="addCellsResponse" type="tns:addCellsResponse"/>
+
+  <xs:element name="addRoutes" type="tns:addRoutes"/>
+
+  <xs:element name="addRoutesResponse" type="tns:addRoutesResponse"/>
+
+  <xs:element name="addTransportAgents" type="tns:addTransportAgents"/>
+
+  <xs:element name="addTransportAgentsResponse" type="tns:addTransportAgentsResponse"/>
+
+  <xs:element name="getCells" type="tns:getCells"/>
+
+  <xs:element name="getCellsResponse" type="tns:getCellsResponse"/>
+
+  <xs:element name="getRoutes" type="tns:getRoutes"/>
+
+  <xs:element name="getRoutesResponse" type="tns:getRoutesResponse"/>
+
+  <xs:element name="getTransportAgents" type="tns:getTransportAgents"/>
+
+  <xs:element name="getTransportAgentsResponse" type="tns:getTransportAgentsResponse"/>
+
+  <xs:element name="removeCells" type="tns:removeCells"/>
+
+  <xs:element name="removeCellsResponse" type="tns:removeCellsResponse"/>
+
+  <xs:element name="removeRoutes" type="tns:removeRoutes"/>
+
+  <xs:element name="removeRoutesResponse" type="tns:removeRoutesResponse"/>
+
+  <xs:element name="removeTransportAgents" type="tns:removeTransportAgents"/>
+
+  <xs:element name="removeTransportAgentsResponse" type="tns:removeTransportAgentsResponse"/>
+
+  <xs:element name="updateCells" type="tns:updateCells"/>
+
+  <xs:element name="updateCellsResponse" type="tns:updateCellsResponse"/>
+
+  <xs:element name="updateRoutes" type="tns:updateRoutes"/>
+
+  <xs:element name="updateRoutesResponse" type="tns:updateRoutesResponse"/>
+
+  <xs:element name="updateTransportAgents" type="tns:updateTransportAgents"/>
+
+  <xs:element name="updateTransportAgentsResponse" type="tns:updateTransportAgentsResponse"/>
+
+  <xs:complexType name="updateRoutes">
+    <xs:sequence>
+      <xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="route">
+    <xs:sequence>
+      <xs:element name="conflicts" type="tns:routePoint" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="route" type="tns:routePoint" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="routePoint">
+    <xs:complexContent>
+      <xs:extension base="tns:gridPoint">
+        <xs:sequence>
+          <xs:element name="timeframe" type="xs:int"/>
+          <xs:element name="transportAgentID" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="gridPoint" abstract="true">
+    <xs:sequence>
+      <xs:element name="cellID" type="xs:int"/>
+      <xs:element name="x" type="xs:int"/>
+      <xs:element name="y" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateRoutesResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="SQLException">
+    <xs:sequence>
+      <xs:element name="SQLState" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorCode" type="xs:int"/>
+      <xs:element name="message" type="xs:string" minOccurs="0"/>
+      <xs:element name="nextException" type="tns:sqlException" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sqlException">
+    <xs:complexContent>
+      <xs:extension base="tns:exception">
+        <xs:sequence>
+          <xs:element name="nextException" type="tns:sqlException" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="exception">
+    <xs:complexContent>
+      <xs:extension base="tns:throwable">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="throwable">
+    <xs:sequence>
+      <xs:element name="stackTrace" type="tns:stackTraceElement" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="stackTraceElement" final="extension restriction">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="addRoutes">
+    <xs:sequence>
+      <xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addRoutesResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCells">
+    <xs:sequence>
+      <xs:element name="cellIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCellsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:cell" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="cell">
+    <xs:complexContent>
+      <xs:extension base="tns:gridPoint">
+        <xs:sequence>
+          <xs:element name="accessibleFromDown" type="xs:boolean"/>
+          <xs:element name="accessibleFromLeft" type="xs:boolean"/>
+          <xs:element name="accessibleFromRight" type="xs:boolean"/>
+          <xs:element name="accessibleFromUp" type="xs:boolean"/>
+          <xs:element name="maxDiameter" type="xs:int"/>
+          <xs:element name="maxWeight" type="xs:int"/>
+          <xs:element name="slopeInDegreesFromDown" type="xs:int"/>
+          <xs:element name="slopeInDegreesFromLeft" type="xs:int"/>
+          <xs:element name="slopeInDegreesFromRight" type="xs:int"/>
+          <xs:element name="slopeInDegreesFromUp" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="getTransportAgents">
+    <xs:sequence>
+      <xs:element name="transportAgentIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getTransportAgentsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:transportAgent" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="transportAgent">
+    <xs:sequence>
+      <xs:element name="height" type="xs:int"/>
+      <xs:element name="length" type="xs:int"/>
+      <xs:element name="maxFramesMoveOneCellBackward" type="xs:int"/>
+      <xs:element name="maxFramesMoveOneCellForward" type="xs:int"/>
+      <xs:element name="maxFramesTurnClockwise180" type="xs:int"/>
+      <xs:element name="maxFramesTurnClockwise90" type="xs:int"/>
+      <xs:element name="maxFramesTurnCounterclockwise180" type="xs:int"/>
+      <xs:element name="maxFramesTurnCounterclockwise90" type="xs:int"/>
+      <xs:element name="maxProductHeight" type="xs:int"/>
+      <xs:element name="maxProductLength" type="xs:int"/>
+      <xs:element name="maxProductWeight" type="xs:int"/>
+      <xs:element name="maxProductWidth" type="xs:int"/>
+      <xs:element name="weight" type="xs:int"/>
+      <xs:element name="width" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRoutes">
+    <xs:sequence>
+      <xs:element name="transportAgentIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRoutesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeCells">
+    <xs:sequence>
+      <xs:element name="cellIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeCellsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="removeRoutes">
+    <xs:sequence>
+      <xs:element name="routes" type="tns:route" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeRoutesResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="removeTransportAgents">
+    <xs:sequence>
+      <xs:element name="transportAgentIDs" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeTransportAgentsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="addTransportAgents">
+    <xs:sequence>
+      <xs:element name="transportAgents" type="tns:transportAgent" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addTransportAgentsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateCells">
+    <xs:sequence>
+      <xs:element name="cells" type="tns:cell" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCellsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateTransportAgents">
+    <xs:sequence>
+      <xs:element name="transportAgents" type="tns:transportAgent" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateTransportAgentsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="addCells">
+    <xs:sequence>
+      <xs:element name="cells" type="tns:cell" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addCellsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+</xs:schema>
+
