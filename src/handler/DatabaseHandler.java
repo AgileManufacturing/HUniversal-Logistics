@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 
 import object.Cell;
@@ -50,6 +51,7 @@ public interface DatabaseHandler {
 	 * @return The list of {@link object.TransportAgent} agents.
 	 */
 	@WebMethod
+	@WebResult(name="transportAgent")
 	abstract public List<TransportAgent> getTransportAgents(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs);
 	
 	/**
@@ -82,6 +84,7 @@ public interface DatabaseHandler {
 	 * @return The list of {@link object.Cell} objects.
 	 */
 	@WebMethod
+	@WebResult(name="cell")
 	abstract public List<Cell> getCells(@WebParam(name = "cellIDs") List<Integer> cellIDs);
 	
 	/**
@@ -114,5 +117,6 @@ public interface DatabaseHandler {
 	 * @return The list of {@link object.Route} objects.
 	 */
 	@WebMethod
+	@WebResult(name="route")
 	abstract public List<Route> getRoutes(@WebParam(name = "transportAgentIDs") List<Integer> transportAgentIDs);
 }

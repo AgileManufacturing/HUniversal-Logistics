@@ -1,68 +1,90 @@
 package object;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Represents a transport agent.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 public class TransportAgent {
 	/**
 	 * The ID of the transport agent.
 	 */
+	@XmlElement
 	private int transportAgentID;
 	/** 
 	 * The maximal amount of timeframes it takes to move one cell forward.
 	 */
+	@XmlElement
 	private int maxFramesMoveOneCellForward;
 	/** 
 	 * The maximal amount of timeframes it takes to move one cell backward.
 	 */
+	@XmlElement
 	private int maxFramesMoveOneCellBackward;
 	/** 
 	 * The maximal amount of timeframes it takes to turn 90 degrees clockwise.
 	 */
+	@XmlElement
 	private int maxFramesTurnClockwise90;
 	/** 
 	 * The maximal amount of timeframes it takes to turn 180 degrees clockwise.
 	 */
+	@XmlElement
 	private int maxFramesTurnClockwise180;
 	/** 
 	 * The maximal amount of timeframes it takes to turn 90 degrees counterclockwise.
 	 */
+	@XmlElement
 	private int maxFramesTurnCounterclockwise90;
 	/** 
 	 * The maximal amount of timeframes it takes to turn 180 degrees counterclockwise.
 	 */
+	@XmlElement
 	private int maxFramesTurnCounterclockwise180;
 	/** 
 	 * The weight in gram of the transport unit.
 	 */
+	@XmlElement
 	private int weight;
 	/**
 	 * The length in millimeter of the transport unit.
 	 */
+	@XmlElement
 	private int length;
 	/**
 	 * The width in millimeter of the transport unit.
 	 */
+	@XmlElement
 	private int width;
 	/**
 	 * The height in millimeter of the transport unit.
 	 */
+	@XmlElement
 	private int height;
 	/**
 	 * The maximal weight in gram of the product this transport agent can transport.
 	 */
+	@XmlElement
 	private int maxProductWeight;
 	/**
 	 * The maximal length in millimeter of the product this transport agent can transport.
 	 */
+	@XmlElement
 	private int maxProductLength;
 	/**
 	 * The maximal width in millimeter of the product this transport agent can transport.
 	 */
+	@XmlElement
 	private int maxProductWidth;
 	/**
 	 * The maximal height in millimeter of the product this transport agent can transport.
 	 */
+	@XmlElement
 	private int maxProductHeight;
 	
 	/**
@@ -302,5 +324,25 @@ public class TransportAgent {
 	 */
 	public void setMaxProductHeight(int maxProductHeight) {
 		this.maxProductHeight = maxProductHeight;
+	}
+	
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		buf.append("\ntransportAgentID: " + this.getTransportAgentID());
+		buf.append("\nmaxFramesMoveOneCellForward: " + this.getMaxFramesMoveOneCellForward());
+		buf.append("\nmaxFramesMoveOneCelBackward: " + this.getMaxFramesMoveOneCellForward());
+		buf.append("\nmaxFramesTurnClockwise90: " + this.getMaxFramesTurnClockwise90());
+		buf.append("\nmaxFramesTurnClockwise180: " + this.getMaxFramesTurnClockwise180());
+		buf.append("\nmaxFramesTurnCounterclockwise90: " + this.getMaxFramesTurnCounterclockwise90());
+		buf.append("\nmaxFramesTurnCounterclockwise180: " + this.getMaxFramesTurnCounterclockwise180());
+		buf.append("\nweight: " + this.getWeight());
+		buf.append("\nlength: " + this.getLength());
+		buf.append("\nwidth: " + this.getWidth());
+		buf.append("\nheight: " + this.getHeight());
+		buf.append("\nmaxProductWeight: " + this.getMaxProductWeight());
+		buf.append("\nmaxProductLength: " + this.getMaxProductLength());
+		buf.append("\nmaxProductWidth: " + this.getMaxProductWidth());
+		buf.append("\nmaxProductHeight: " + this.getMaxProductHeight());
+		return buf.toString();
 	}
 }

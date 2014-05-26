@@ -1,17 +1,26 @@
 package object;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Represents single timeframe of a {@link object.Route}.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 public class RoutePoint extends GridPoint {
 	/**
 	 * The timeframe in which a cell is occupied.
 	 */
+	@XmlElement
 	private int transportAgentID;
 	
 	/**
 	 * The timeframe in which a cell is occupied.
 	 */
+	@XmlElement
 	private int timeframe;
 
 	public RoutePoint() {
@@ -57,5 +66,13 @@ public class RoutePoint extends GridPoint {
 	 */
 	public void setTimeframe(int timeframe) {
 		this.timeframe = timeframe;
+	}
+	
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		buf.append(super.toString());
+		buf.append("\ntransportAgentID: " + this.getTransportAgentID());
+		buf.append("\ntimeframe: " + this.getTimeframe());
+		return buf.toString();
 	}
 }
