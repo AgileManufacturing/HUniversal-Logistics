@@ -41,8 +41,7 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			ctx = new InitialContext();
 			ds = (DataSource)ctx.lookup(datasource);
 		} catch (NamingException e) {
-			logger.severe("Failed to look up DataSource " + datasource);
-			logger.severe(e.getMessage());
+			logger.severe("Failed to look up DataSource " + datasource + " (" + e.getMessage() + ")");
 		}
 	}
 
@@ -88,30 +87,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			addedTransportAgents = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not add TranportAgent(s) to " + databaseName + "." + transportAgentsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not add TranportAgent(s) to " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return addedTransportAgents;
@@ -159,30 +150,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			updatedTransportAgents = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not update TranportAgent(s) in " + databaseName + "." + transportAgentsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not update TranportAgent(s) in " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return updatedTransportAgents;
@@ -208,30 +191,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			removedTransportAgents = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not remove TranportAgent(s) from " + databaseName + "." + transportAgentsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not remove TranportAgent(s) from " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return removedTransportAgents;
@@ -285,24 +260,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 				}
 			}		
 		} catch (SQLException e) {
-			logger.severe("Could not get TranportAgent(s) from " + databaseName + "." + transportAgentsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not get TranportAgent(s) from " + databaseName + "." + transportAgentsTable + " (" + e.getMessage() + ")");
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close ResultSet (" + e.getMessage() + ")");				
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return transportAgents;
@@ -347,30 +320,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			addedCells = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not add Cell(s) to " + databaseName + "." + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not add Cell(s) to " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return addedCells;
@@ -414,30 +379,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			updatedCells = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not update Cell(s) in " + databaseName + "." + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not update Cell(s) in " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return updatedCells;
@@ -463,30 +420,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			removedCells = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not remove Cell(s) from " + databaseName + "." + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not remove Cell(s) from " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return removedCells;
@@ -539,24 +488,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 				}
 			}
 		} catch (SQLException e) {
-			logger.severe("Could not get Cell(s) from " + databaseName + "." + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not get Cell(s) from " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close ResultSet (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
+			}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return cells;
@@ -588,30 +535,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			addedRoutes = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not add Route(s) to " + databaseName + "." + routesTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not add Route(s) to " + databaseName + "." + routesTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return addedRoutes;
@@ -642,30 +581,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			updatedRoutes = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not update Cell(s) in " + databaseName + "." + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not update Cell(s) in " + databaseName + "." + cellsTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return updatedRoutes;
@@ -694,30 +625,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 			removedRoutes = ps.executeBatch().length;
 			con.setAutoCommit(true);
 		} catch (SQLException e) {
-			logger.severe("Could not remove Route(s) from " + databaseName + "." + routesTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not remove Route(s) from " + databaseName + "." + routesTable + " (" + e.getMessage() + ")");
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
-				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable);
-				logger.severe(e.getMessage());
+				logger.severe("Could not roll back changes to " + databaseName + "." + routesTable + " (" + e.getMessage() + ")");
 			}
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return removedRoutes;
@@ -771,24 +694,22 @@ public class JDBCDatabaseHandler implements DatabaseHandler {
 				}
 			}
 		} catch (SQLException e) {
-			logger.severe("Could not get Route(s) from " + databaseName + "." + routesTable + " and " + cellsTable);
-			logger.severe(e.getMessage());
+			logger.severe("Could not get Route(s) from " + databaseName + "." + routesTable + " and " + cellsTable + " (" + e.getMessage() + ")");
 		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close PreparedStatement");
-					logger.severe(e.getMessage());
-				}
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close ResultSet (" + e.getMessage() + ")");
 			}
-		    if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException e) {
-					logger.severe("Could not close Connection");
-					logger.severe(e.getMessage());
-				}
+			try {
+				ps.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close PreparedStatement (" + e.getMessage() + ")");
+			}
+		    try {
+				con.close();
+			} catch (SQLException e) {
+				logger.severe("Could not close Connection (" + e.getMessage() + ")");
 			}
 		}
 		return routes;

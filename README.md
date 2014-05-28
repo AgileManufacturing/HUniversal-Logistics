@@ -16,4 +16,8 @@ When starting Tomcat from Eclipse the following warning appears:
 	
 	This is caused by Eclipse setting a 'source' property which Tomcat
 	doesn't use. It has no effect.
-	
+
+
+There are a number of warnings about the web application creating ThreadLocals
+which are not removed when the web application is stopped. This seems to be 
+caused by third party libraries and Tomcat is able to clean this up.

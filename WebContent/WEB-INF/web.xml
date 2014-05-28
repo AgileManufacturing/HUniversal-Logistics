@@ -18,6 +18,11 @@
      	</listener-class>
   	</listener>
   	
+  	<listener>
+    	<listener-class>
+        	servlet.DiscoveryListener
+     	</listener-class>
+  	</listener>
   
   	<servlet>
     	<servlet-name>database</servlet-name>

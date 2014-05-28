@@ -26,10 +26,10 @@ public class CleanUpListener implements ServletContextListener  {
 	    while (drivers.hasMoreElements()) {
 	        Driver driver = drivers.nextElement();
 	        try {
+	        	logger.info("Deregistering driver " + driver);
 	            DriverManager.deregisterDriver(driver);
-	            logger.info("Deregistering driver " + driver);
 	        } catch (SQLException e) {
-	            logger.severe("Error deregistering driver " + driver);
+	            logger.severe("Error deregistering driver " + driver + " (" + e.getMessage() + ")");
 	            logger.severe(e.getMessage());
 	        }
 
