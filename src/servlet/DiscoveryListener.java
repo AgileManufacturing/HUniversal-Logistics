@@ -11,14 +11,14 @@ public class DiscoveryListener implements ServletContextListener  {
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		logger.info("Starting new discovery thread");
-		DiscoveryThread.getInstance().start();
+		DiscoveryTask.getInstance().start();
 		logger.info("New discovery thread started");
 	}
 	
 	@Override
 	public void contextDestroyed(ServletContextEvent arg0) {
 		logger.info("Stopping discovery thread");
-		DiscoveryThread.getInstance().stop();
+		DiscoveryTask.getInstance().stop();
 		logger.info("Discovery thread stopped");
 	}
 }
