@@ -5,37 +5,59 @@ import java.net.DatagramPacket;
 import java.util.Arrays;
 import java.util.logging.Logger;
 
+/**
+ * Receives requests and sends responses depending on whether the address asked
+ * for is known. Also handles responses on requests send by
+ * {@link servlet.DiscoveryRequestThread}.
+ */
 public class DiscoveryResponseThread implements Runnable {
 	private static Logger logger = Logger.getLogger(DiscoveryResponseThread.class.getName());
 	
+	/**
+	 * The instance of {@link servlet.DiscoveryTask}.
+	 */
 	private DiscoveryTask discoveryTask;
 	private Thread thread;
-	private boolean running;
+	
+	/**
+	 * Used to make a distinction between a socket closing on it's own or a
+	 * socket closing because the stop method is called.
+	 */
+	private boolean isRunning;
 	
 	public DiscoveryResponseThread(DiscoveryTask discoveryTask) {
 		this.discoveryTask = discoveryTask;
-		this.running = false;
+		this.isRunning = false;
 	}	
 	
+	/**
+	 * Starts the thread.
+	 */
 	public void start() {
 		thread = new Thread(this);
 		thread.start();
-		this.running = true;
+		isRunning = true;
 	}
 	
+	/**
+	 * Stops the thread.
+	 */
 	public void stop() {
 		// socket.receive() blocks, so close the socket and catch the exception to exit
-		this.running = false;
+		isRunning = false;
 		discoveryTask.closeSocket();
 	}
 	
+	/**
+	 * @return Whether the thread is still running or not.
+	 */
 	public boolean isRunning() {
 		return thread.isAlive();
 	}
-	
+
 	@Override
 	public void run() {
-		while (running) {
+		while (isRunning) {
 			try {
 				// Receive packets
 				byte[] recvBuf = new byte[15000];
@@ -94,10 +116,11 @@ public class DiscoveryResponseThread implements Runnable {
 				}
 				
 			} catch (IOException e) {
-				if (running) {
+				if (isRunning) {
 					logger.severe("Could not receive or send on socket: " + discoveryTask.getSocket() + " (" + e.getMessage() + ")");
 					discoveryTask.reopenSocket();
-				} else { // socket.receive() blocks, so close the socket and catch the exception to exit
+				} else {
+					// socket.receive() blocks, so close the socket and catch the exception to exit
 					break;
 				}
 			}

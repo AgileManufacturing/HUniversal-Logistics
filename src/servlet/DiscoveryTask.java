@@ -15,25 +15,77 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 /**
- * Background task which handles finding the addresses of other webservices and
- * responding to requests for the address of this webservice.</br>
- * Uses /config/service.properties to store settings.
+ * Background task which handles finding the addresses of other web services and
+ * responding to requests for the address of this web service or the addresses of
+ * web services known by this web service.</br>
+ * Uses /config/service.properties to store settings.</br>
+ * This class is a singleton and can not be constructed directly.
  */
 public class DiscoveryTask {
 	private static Logger logger = Logger.getLogger(DiscoveryTask.class.getName());
+	/**
+	 * The path of the configuration file in the format modified_package_name/name
+	 * ("." in the package name should be replaced with "/").
+	 */
+	private static final String propertiesPath = "/config/service.properties";
 	
+	/**
+	 * The instance of {@link servlet.DiscoveryTask}.
+	 */
 	private static DiscoveryTask instance;
+	
+	/**
+	 * Whether this task is running or not.
+	 */
 	private boolean running;
+	
+	/**
+	 * Whether this task is busy reopening the socket or not.</br>
+	 * This prevents multiple reopening attempts at the same time.
+	 */
 	private boolean reopeningSocket;
+	
+	/**
+	 * The socket used to send and receive packets.
+	 */
 	private DatagramSocket socket;
+	
+	/**
+	 * The instance of {@link servlet.DiscoveryRequestThread} used to send
+	 * requests.
+	 */
 	private DiscoveryRequestThread discoveryRequestThread;
+	
+	/**
+	 * The instance of {@link servlet.DiscoveryResponseThread} used to
+	 * receive requests and send responses.
+	 */
 	private DiscoveryResponseThread discoveryResponseThread;
 	
-	private static final String propertiesPath = "/config/service.properties";
+	
+	/**
+	 * The time in milliseconds between requests for addresses of required
+	 * services for which no address is currently known.
+	 */
 	private int requestWaitMs;
+	
+	/**
+	 * The port of this web service
+	 */
 	private int port;
+	
+	/**
+	 * The service type of this web service.
+	 */
 	private String serviceType;
+	
+	/**
+	 * The service types for which this web service requires addresses.
+	 */
 	private List<String> requiredServices;
+	/**
+	 * The addresses of required services found so far.
+	 */
 	private HashMap<String, List<String>> addresses;
 	
 	private DiscoveryTask() {
@@ -57,7 +109,7 @@ public class DiscoveryTask {
 				logger.severe("requestWaitMs key is missing or empty in " + propertiesPath);
 			} else {
 				this.requestWaitMs = Integer.parseInt(tmpwait);
-				logger.info("Request wait time (ms) is: " + tmpwait);
+				logger.info("Request wait time (ms) is " + tmpwait);
 			}
 			if (tmpport.equals("")) {
 				logger.severe("port key is missing or empty in " + propertiesPath);
@@ -82,6 +134,9 @@ public class DiscoveryTask {
 		logger.info("Service " + serviceType + " started on port " + port + ", required services " + Arrays.toString(requiredServices.toArray()));
 	}
 	
+	/**
+	 * Returns the instance of this class.
+	 */
 	public static DiscoveryTask getInstance() {
 		if (instance == null) {
 			instance = new DiscoveryTask();
@@ -89,6 +144,9 @@ public class DiscoveryTask {
 		return instance;
 	}
 	
+	/**
+	 * Starts the task.
+	 */
 	public void start() {
 		if (running != true) {
 			this.running = true;
@@ -97,10 +155,13 @@ public class DiscoveryTask {
 			this.discoveryRequestThread.start();
 			this.discoveryResponseThread.start();
 		} else {
-			logger.severe("Trying to start a task which is already running");
+			logger.warning("Trying to start a task which is already running");
 		}
 	}
-	
+
+	/**
+	 * Stops the task.
+	 */
 	public void stop() {
 		if (running == true) {
 			this.running = false;
@@ -119,10 +180,13 @@ public class DiscoveryTask {
 			
 			closeSocket();
 		} else {
-			logger.severe("Trying to stop a task which is not running");
+			logger.warning("Trying to stop a task which is not running");
 		}
 	}
 	
+	/**
+	 * Restarts the task.
+	 */
 	public void restart() {
 		if (running = true) {
 			this.stop();
@@ -130,6 +194,9 @@ public class DiscoveryTask {
 		this.start();
 	}
 	
+	/**
+	 * Opens the socket.
+	 */
 	public void openSocket() {
 		while (socket == null || socket.isClosed()) {
 			try {
@@ -145,12 +212,18 @@ public class DiscoveryTask {
 		}
 	}
 	
+	/**
+	 * Closes the socket.
+	 */
 	public void closeSocket() {
 		if (socket != null) {
 			socket.close();
 		}
 	}
 	
+	/**
+	 * Closes and reopens the socket.
+	 */
 	public void reopenSocket() {
 		if (!reopeningSocket) {
 			reopeningSocket = true;
@@ -159,23 +232,38 @@ public class DiscoveryTask {
 			reopeningSocket = false;
 		}
 	}
+	
+	/**
+	 * @return The socket.
+	 */
+	public DatagramSocket getSocket() {
+		return socket;
+	}
 
+	/**
+	 * @return Whether the task is running or not.
+	 */
 	public boolean isRunning() {
 		return this.running;
 	}
 	
+	/**
+	 * @return The type of this service.
+	 */
 	public String getServiceType() {
 		return serviceType;
 	}
 	
+	/**
+	 * @return The list of services required by this service.
+	 */
 	public List<String> getRequiredservices() {
 		return requiredServices;
 	}
-
-	public DatagramSocket getSocket() {
-		return socket;
-	}
 	
+	/**
+	 * @return The port used by this service.
+	 */
 	public int getPort() {
 		return port;
 	}
@@ -201,11 +289,9 @@ public class DiscoveryTask {
 	/**
 	 * Get a list of known addresses for a given service type.
 	 * @param serviceType The service type for which to get a list of addresses.
-	 * @return The list of known addresses for the given service type.
+	 * @return A list of known addresses for the given service type.
 	 */
 	public List<String> getAddresses(String serviceType) {
-		return addresses.get(serviceType);
+		return new ArrayList<String>(addresses.get(serviceType));
 	}
-	
-	
 }

@@ -11,11 +11,24 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
+/**
+ * Sends requests for web services which are required but which do not have
+ * a known address. Responses to these requests are handled by
+ * {@link servlet.DiscoveryResponseThread}.
+ */
 public class DiscoveryRequestThread implements Runnable {
 	private static Logger logger = Logger.getLogger(DiscoveryRequestThread.class.getName());
 	
+	/**
+	 * The instance of {@link servlet.DiscoveryTask}.
+	 */
 	private DiscoveryTask discoveryTask;
 	private ScheduledExecutorService executor;
+	
+	/**
+	 * The time in milliseconds between requests for addresses of required
+	 * services for which no address is currently known.
+	 */
 	private int requestWaitMs;
 	
 	public DiscoveryRequestThread(DiscoveryTask discoveryTask, int requestWaitMs) {
@@ -23,15 +36,24 @@ public class DiscoveryRequestThread implements Runnable {
 		this.requestWaitMs = requestWaitMs;
 	}
 	
+	/**
+	 * Starts the thread.
+	 */
 	public void start() {
 		executor = Executors.newScheduledThreadPool(1);
 		executor.scheduleAtFixedRate(this, 0, requestWaitMs, TimeUnit.MILLISECONDS);
 	}
 	
+	/**
+	 * Stops the thread.
+	 */
 	public void stop() {
 		executor.shutdown();
 	}
 	
+	/**
+	 * @return Whether the thread is still running or not.
+	 */
 	public boolean isRunning() {
 		return !executor.isTerminated();
 	}

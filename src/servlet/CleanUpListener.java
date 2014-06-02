@@ -11,6 +11,13 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+/**
+ * Deregisters JDBC drivers during shutdown to prevent Tomcat from complaining.</br>
+ * 
+ * JDBC drivers should be automatically deregistered during shutdown. This does
+ * not happen at the moment most likely due to a bug in the driver. This Listener
+ * can be removed when the JDBC drivers deregister automatically.
+ */
 public class CleanUpListener implements ServletContextListener  {
 	private static Logger logger = Logger.getLogger(JDBCDatabaseHandler.class.getName());
     
