@@ -11,8 +11,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
@@ -26,25 +24,22 @@ public class DiscoveryTask {
 	
 	private static DiscoveryTask instance;
 	private boolean running;
+	private boolean reopeningSocket;
 	private DatagramSocket socket;
-	ScheduledExecutorService executor;
-	Thread thread;
+	private DiscoveryRequestThread discoveryRequestThread;
+	private DiscoveryResponseThread discoveryResponseThread;
 	
 	private static final String propertiesPath = "/config/service.properties";
-	int requestWaitMs;
-	int port;
+	private int requestWaitMs;
+	private int port;
 	private String serviceType;
 	private List<String> requiredServices;
-
 	private HashMap<String, List<String>> addresses;
 	
 	private DiscoveryTask() {
 		this.running = false;
 		this.addresses = new HashMap<String, List<String>>();
 		this.socket = null;
-		executor = null;
-		thread = null;
-		
 		Properties prop = new Properties();
 		InputStream input = null;
 		String tmpport = null;
@@ -56,7 +51,7 @@ public class DiscoveryTask {
 			tmpwait = prop.getProperty("requestWaitMs", "");
 			tmpport = prop.getProperty("port", "");
 			this.serviceType = prop.getProperty("serviceType", "");
-			this.requiredServices = Arrays.asList(prop.getProperty("requiredServices", "").split(","));
+			this.requiredServices = Arrays.asList(prop.getProperty(serviceType, "").split(","));
 			
 			if (tmpwait.equals("")) {
 				logger.severe("requestWaitMs key is missing or empty in " + propertiesPath);
@@ -68,25 +63,23 @@ public class DiscoveryTask {
 				logger.severe("port key is missing or empty in " + propertiesPath);
 			} else {
 				this.port = Integer.parseInt(tmpport);
-				logger.info("Port is: " + tmpport);
 			}
 			if (serviceType.equals("")) {
 				logger.severe("serviceType key is missing or empty in " + propertiesPath);
-			} else {
-				logger.info("Service type is: " + serviceType);
 			}
 			if (requiredServices == null) {
 				logger.severe("requiredServices key is missing or empty in " + propertiesPath);
 			} else {
-				for (String serviceType : requiredServices) {
-					addresses.put(serviceType, new ArrayList<String>());
+				for (String service : requiredServices) {
+					addresses.put(service, new ArrayList<String>());
 				}
-				logger.info("Required services are: " + Arrays.toString(requiredServices.toArray()));
 			}
-			
 		} catch (IOException e) {
 			logger.severe("Could not open " + propertiesPath + " (" + e.getMessage() + ")");
 		}
+		this.discoveryRequestThread = new DiscoveryRequestThread(this, requestWaitMs);
+		this.discoveryResponseThread = new DiscoveryResponseThread(this);
+		logger.info("Service " + serviceType + " started on port " + port + ", required services " + Arrays.toString(requiredServices.toArray()));
 	}
 	
 	public static DiscoveryTask getInstance() {
@@ -100,22 +93,9 @@ public class DiscoveryTask {
 		if (running != true) {
 			this.running = true;
 			
-			try {
-				socket = new DatagramSocket(port, InetAddress.getByName("0.0.0.0"));
-				socket.setBroadcast(true);
-			} catch (SocketException e) {
-				logger.severe("Could not create or acces socket: " + socket + " (" + e.getMessage() + " )");
-			} catch (UnknownHostException e) {
-				logger.severe("Host could not be found (" + e.getMessage() + " )");
-			}
-			
-			DiscoveryRequestRunnable discoveryRequestRunnable = new DiscoveryRequestRunnable(this);
-			executor = Executors.newScheduledThreadPool(1);
-			executor.scheduleAtFixedRate(discoveryRequestRunnable, 0, requestWaitMs, TimeUnit.MILLISECONDS);
-			
-			thread = new Thread(new DiscoveryResponseRunnable(this));
-			thread.start();
-			
+			openSocket();
+			this.discoveryRequestThread.start();
+			this.discoveryResponseThread.start();
 		} else {
 			logger.severe("Trying to start a task which is already running");
 		}
@@ -125,14 +105,59 @@ public class DiscoveryTask {
 		if (running == true) {
 			this.running = false;
 			
-			executor.shutdown();
-			thread.interrupt();
+			this.discoveryRequestThread.stop();
+			this.discoveryResponseThread.stop();
 			
-			socket.close();
+			while (this.discoveryRequestThread.isRunning() ||
+					this.discoveryResponseThread.isRunning()) {
+				try {
+					TimeUnit.MILLISECONDS.sleep(10);
+				} catch (InterruptedException e) {
+					logger.severe("Interrupted while sleeping (" + e.getMessage() + ")");
+				}
+			}
+			
+			closeSocket();
 		} else {
 			logger.severe("Trying to stop a task which is not running");
 		}
-		
+	}
+	
+	public void restart() {
+		if (running = true) {
+			this.stop();
+		}
+		this.start();
+	}
+	
+	public void openSocket() {
+		while (socket == null || socket.isClosed()) {
+			try {
+				socket = new DatagramSocket(port, InetAddress.getByName("0.0.0.0"));
+				socket.setBroadcast(true);
+			} catch (SocketException e) {
+				//logger.severe("Could not create or access socket: " + socket + " (" + e.getMessage() + " )");
+				closeSocket();
+			} catch (UnknownHostException e) {
+				logger.severe("Host could not be found (" + e.getMessage() + " )");
+				closeSocket();
+			}
+		}
+	}
+	
+	public void closeSocket() {
+		if (socket != null) {
+			socket.close();
+		}
+	}
+	
+	public void reopenSocket() {
+		if (!reopeningSocket) {
+			reopeningSocket = true;
+			closeSocket();
+			openSocket();
+			reopeningSocket = false;
+		}
 	}
 
 	public boolean isRunning() {

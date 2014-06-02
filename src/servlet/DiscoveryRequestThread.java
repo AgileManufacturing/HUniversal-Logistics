@@ -6,15 +6,34 @@ import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
 import java.util.Enumeration;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-public class DiscoveryRequestRunnable implements Runnable {
-	private static Logger logger = Logger.getLogger(DiscoveryRequestRunnable.class.getName());
+public class DiscoveryRequestThread implements Runnable {
+	private static Logger logger = Logger.getLogger(DiscoveryRequestThread.class.getName());
 	
 	private DiscoveryTask discoveryTask;
+	private ScheduledExecutorService executor;
+	private int requestWaitMs;
 	
-	public DiscoveryRequestRunnable(DiscoveryTask discoveryTask) {
+	public DiscoveryRequestThread(DiscoveryTask discoveryTask, int requestWaitMs) {
 		this.discoveryTask = discoveryTask;
+		this.requestWaitMs = requestWaitMs;
+	}
+	
+	public void start() {
+		executor = Executors.newScheduledThreadPool(1);
+		executor.scheduleAtFixedRate(this, 0, requestWaitMs, TimeUnit.MILLISECONDS);
+	}
+	
+	public void stop() {
+		executor.shutdown();
+	}
+	
+	public boolean isRunning() {
+		return !executor.isTerminated();
 	}
 	
 	@Override
@@ -47,13 +66,14 @@ public class DiscoveryRequestRunnable implements Runnable {
 							}				
 							sendPacket = new DatagramPacket(sendData, sendData.length, broadcast, discoveryTask.getPort());
 							discoveryTask.getSocket().send(sendPacket);
-							//logger.info("Send a message on socket: " + discoveryTask.getSocket() + " (" + new String(sendPacket.getData()).trim() + ")");
+							//logger.info("Sending a message on socket: " + discoveryTask.getSocket() + " (" + new String(sendPacket.getData()).trim() + ")");
 						}
 					}
 				}
 			}
 		} catch (IOException e) {
 			logger.severe("Could not receive or send on socket: " + discoveryTask.getSocket() + " (" + e.getMessage() + ")");
+			discoveryTask.reopenSocket();
 		} 
 	}
 }
