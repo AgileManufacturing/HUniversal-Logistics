@@ -13,12 +13,13 @@
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 1 </div>
-			<div class="productagentID"> 1 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 80 </div>
-				<div class="y"> 23 </div>
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 1 </div>
+			<div class="product_agent_id"> 1 </div>
+			<div class="current_position"> 
+				<div class="x"> 8 </div>
+				<div class="y"> 3 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
@@ -31,66 +32,76 @@
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 3 </div>
-			<div class="productagentID"> 3 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 42 </div>
-				<div class="y"> 186 </div>
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 3 </div>
+			<div class="product_agent_id"> 3 </div>
+			<div class="current_position"> 
+				<div class="x"> 0 </div>
+				<div class="y"> 8 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 4 </div>
-			<div class="productagentID"> 4 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 132 </div>
-				<div class="y"> 206 </div>
-				<div class="z"> 0 </div>
-			</div>
-		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 5 </div>
-			<div class="productagentID"> 5 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 232 </div>
+		
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 4 </div>
+			<div class="product_agent_id"> 4 </div>
+			<div class="current_position"> 
+				<div class="x"> 2 </div>
 				<div class="y"> 6 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 6 </div>
-			<div class="productagentID"> 6 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 78 </div>
-				<div class="y"> 71 </div>
+		
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 5 </div>
+			<div class="product_agent_id"> 5 </div>
+			<div class="current_position"> 
+				<div class="x"> 3 </div>
+				<div class="y"> 3 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 7 </div>
-			<div class="productagentID"> 7 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 178 </div>
-				<div class="y"> 171 </div>
+		
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 6 </div>
+			<div class="product_agent_id"> 6 </div>
+			<div class="current_position"> 
+				<div class="x"> 7 </div>
+				<div class="y"> 1 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 8 </div>
-			<div class="productagentID"> 8 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 780 </div>
-				<div class="y"> 271 </div>
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 7 </div>
+			<div class="product_agent_id"> 7 </div>
+			<div class="current_position"> 
+				<div class="x"> 7 </div>
+				<div class="y"> 7 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
-		<div class="transportunit">
-			<div class="transportunitID"> 9 </div>
-			<div class="productagentID"> 9 </div>
-			<div class="currentPosition"> 
-				<div class="x"> 308 </div>
-				<div class="y"> 371 </div>
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 8 </div>
+			<div class="product_agent_id"> 8 </div>
+			<div class="current_position"> 
+				<div class="x"> 4 </div>
+				<div class="y"> 9 </div>
+				<div class="z"> 0 </div>
+			</div>
+		</div>
+		
+		<div class="transport_unit">
+			<div class="transport_unit_id"> 9 </div>
+			<div class="product_agent_id"> 9 </div>
+			<div class="current_position"> 
+				<div class="x"> 0 </div>
+				<div class="y"> 3 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
