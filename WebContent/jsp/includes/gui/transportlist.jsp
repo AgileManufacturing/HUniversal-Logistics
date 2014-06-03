@@ -29,8 +29,8 @@
 			<div class="transport_unit_id"> 2 </div>
 			<div class="product_agent_id"> 2 </div>
 			<div class="current_position"> 
-				<div class="x"> 432 </div>
-				<div class="y"> 86 </div>
+				<div class="x"> 1 </div>
+				<div class="y"> 0 </div>
 				<div class="z"> 0 </div>
 			</div>
 		</div>
