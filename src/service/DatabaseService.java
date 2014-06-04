@@ -1,4 +1,4 @@
-package handler;
+package service;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import object.TransportAgent;
  * Handles database connections and commands. Abstract class.
  */
 @WebService
-public interface DatabaseHandler {
+public interface DatabaseService {
 	public static final String databaseName = "logistics";
 	public static final String cellsTable = "Cells";
 	public static final String routesTable = "Routes";

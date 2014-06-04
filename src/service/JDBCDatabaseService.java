@@ -1,4 +1,4 @@
-package handler;
+package service;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -27,13 +27,13 @@ import object.TransportAgent;
  * For databases which can be used with the Java JDBC API.
  */
 @WebService
-public class JDBCDatabaseHandler implements DatabaseHandler {
-	private static Logger logger = Logger.getLogger(JDBCDatabaseHandler.class.getName());
+public class JDBCDatabaseService implements DatabaseService {
+	private static Logger logger = Logger.getLogger(JDBCDatabaseService.class.getName());
 
 	//@Resource(name="jdbc/logistics") // Broken in Tomcat 7, handled in constructor instead
 	protected DataSource ds;
 	
-	public JDBCDatabaseHandler() {
+	public JDBCDatabaseService() {
 		// DataSource loaded here instead of using @Resource
 		Context ctx;
 		String datasource = "java:comp/env/jdbc/logistics";

@@ -23,6 +23,10 @@ public class DiscoveryRequestThread implements Runnable {
 	 * The instance of {@link servlet.DiscoveryTask}.
 	 */
 	private DiscoveryTask discoveryTask;
+	
+	/**
+	 * Used to execute the run method periodically
+	 */
 	private ScheduledExecutorService executor;
 	
 	/**
@@ -63,7 +67,7 @@ public class DiscoveryRequestThread implements Runnable {
 		try {
 			// Broadcast request packets
 			for (String serviceType : discoveryTask.getRequiredservices()) { // for each required service
-				if (discoveryTask.getAddresses(serviceType).isEmpty()) {	// for which we don't have an address yet
+				if (discoveryTask.getAddresses(serviceType).isEmpty()) {	 // for which we don't have an address yet
 					
 					// Try 255.255.255.255 first
 					byte[] sendData = ("DISCOVER_" + serviceType.toUpperCase() + "_REQUEST").getBytes();

@@ -1,7 +1,5 @@
 package servlet;
 
-import handler.JDBCDatabaseHandler;
-
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,6 +9,8 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import service.JDBCDatabaseService;
+
 /**
  * Deregisters JDBC drivers during shutdown to prevent Tomcat from complaining.</br>
  * 
@@ -19,7 +19,7 @@ import javax.servlet.ServletContextListener;
  * can be removed when the JDBC drivers deregister automatically.
  */
 public class CleanUpListener implements ServletContextListener  {
-	private static Logger logger = Logger.getLogger(JDBCDatabaseHandler.class.getName());
+	private static Logger logger = Logger.getLogger(JDBCDatabaseService.class.getName());
     
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {

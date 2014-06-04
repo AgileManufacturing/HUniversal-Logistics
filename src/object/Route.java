@@ -25,7 +25,7 @@ public class Route {
 	 * The list of {@link object.RoutePoint} objects conflicting with routes of
 	 * other {@link object.TransportAgent} objects.</br>
 	 * Intended for use by the CalculationService.</br>
-	 * <b>Note: this is NOT set or checked by the {@link handler.DatabaseHandler}</b>
+	 * <b>Note: this is NOT set or checked by the {@link service.DatabaseService}</b>
 	 */
 	@XmlElementWrapper(name="conflicts")
 	@XmlElement(name="routepoint", type=RoutePoint.class)

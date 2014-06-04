@@ -18,11 +18,11 @@ When starting Tomcat from Eclipse the following warning appears:
 	doesn't use. It has no effect.
 
 
-There are a number of warnings about the web application creating ThreadLocals
-which are not removed when the web application is stopped. This seems to be 
-caused by third party libraries.
+When re-deploying the web service in Tomcat there are a number of warnings about
+the web application creating ThreadLocals which are not removed when the web
+application is stopped. This seems to be caused by third party libraries.
 
-This only causes a problem if the web application is re-deployed. In this case
-the libraries in WEB-INF/lib should be moved to $CATALINE_HOME/lib so they will
-be loaded by the common class loader and not reloaded when the web application
-is re-deployed.
+This only causes a problem if the web application is (often) re-deployed in 
+production. In this case the libraries in WEB-INF/lib should be moved to
+$CATALINE_HOME/lib so they will be loaded by the common class loader and not
+reloaded when the web application is re-deployed.

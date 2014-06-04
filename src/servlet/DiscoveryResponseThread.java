@@ -17,6 +17,10 @@ public class DiscoveryResponseThread implements Runnable {
 	 * The instance of {@link servlet.DiscoveryTask}.
 	 */
 	private DiscoveryTask discoveryTask;
+	
+	/**
+	 * The thread used to execute the run method.
+	 */
 	private Thread thread;
 	
 	/**
