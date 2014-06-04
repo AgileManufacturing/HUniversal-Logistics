@@ -41,7 +41,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Agile Manufacturing Transport GUI</title>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/gui.js"></script>
 	<link href="css/main.css" type="text/css" rel="stylesheet">
 	<link href="css/gatewayGUI.css" type="text/css" rel="stylesheet">
+	<link href="css/font-awesome.min.css" type="text/css" rel="stylesheet">
 	<info cookie="<%= cookieRetrieval(request,response) %>">
 </head>

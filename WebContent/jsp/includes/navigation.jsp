@@ -3,30 +3,20 @@
 <div id="nav">
 	<img src="images/REXOS_logo.png" class="logo" />
     <ul>
-    	<a href="#">
-        	<li>
-            	Dashboard
-            </li>
-        </a>
-    	<a href="#">
-        	<li>
-        		Map
-            </li>
-        </a>
-        <a href="#">
-        	<li>
-        		Transport Units
-            </li>
-        </a>
-        <a href="#">
-        	<li>
-        		Information
-            </li>
-        </a>
-        <a href="#">
-        	<li>
-        		Controls
-            </li>
-        </a>
+       	<li class="navigation clicked" id="nav_all">
+			Dashboard
+        </li>
+        <li class="navigation" id="nav_map">
+    		Map
+        </li>
+		<li class="navigation" id="nav_transportlist">
+			Transport Units
+		</li>
+        <li class="navigation" id="nav_information">
+        	Information
+        </li>
+        <li class="navigation" id="nav_control">
+        	Controls
+		</li>
     </ul>
 </div>

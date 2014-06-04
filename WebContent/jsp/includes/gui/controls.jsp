@@ -17,8 +17,8 @@
 		</div>
 	</div>
 	<div id="controls">
-		<div id="gridStart">Start</div>
-		<div id="gridStop">Stop</div>
-		<div id="closeGUI">Close GUI</div>
+		<div id="gridStart" class="control clickable"><div class="icon"><div class="fa fa-play"></div>Start</div></div>
+		<div id="gridStop" class="control clickable"><div class="icon"><div class="fa fa-pause"></div>Stop/Pause</div></div>
+		<div id="closeGUI" class="control clickable"><div class="icon"><div class="fa fa-power-off"></div>Close GUI</div></div>
 	</div>
 </div>

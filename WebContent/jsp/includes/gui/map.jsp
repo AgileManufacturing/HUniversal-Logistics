@@ -20,5 +20,5 @@ google.maps.event.addDomListener(window, 'load', initialize);
 
 <div id="map" class="guiField left">
 	<div id="mapHeader" class="fieldHeader"><div class="head">Map</div></div>
-	<div style="height:fill;"><div id="googleMap"></div></div>
+	<div id="googleMap"></div>
 </div>
