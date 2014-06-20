@@ -1,21 +1,41 @@
 package object;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Represents a point in a grid.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 abstract public class GridPoint {
 	/**
 	 * The ID of the cell at this point.
 	 */
+	@XmlElement
 	protected int cellID;
 	/**
 	 * The x-coordinate of the point in a grid.
 	 */	
+	@XmlElement
 	protected int x;
 	/**
 	 * The y-coordinate of the point in a grid.
 	 */
+	@XmlElement
 	protected int y;
+	
+	public GridPoint() {
+		this(-1, -1, -1);
+	}
+	
+	public GridPoint(int setCellID, int x, int y) {
+		this.setCellID(setCellID);
+		this.setX(x);
+		this.setY(y);
+	}
 	
 	/**
 	 * @return The ID of the cell at this point.
@@ -57,5 +77,13 @@ abstract public class GridPoint {
 	 */
 	public void setY(int y) {
 		this.y = y;
+	}
+	
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		buf.append("\ncellID: " + this.getCellID());
+		buf.append("\nx: " + this.getX());
+		buf.append("\ny: " + this.getY());
+		return buf.toString();
 	}
 }

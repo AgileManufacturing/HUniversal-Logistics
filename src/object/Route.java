@@ -2,20 +2,33 @@ package object;
 
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+
 /**
  * Represents a route in a grid by a {@link object.TransportAgent} object.
  */
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType
 public class Route {
 	/**
 	 * The list of {@link object.RoutePoint objects} of which the route consists.
 	 */
+	@XmlElementWrapper(name="route")
+	@XmlElement(name="routepoint", type=RoutePoint.class)
 	private List<RoutePoint> route;
+	
 	/**
 	 * The list of {@link object.RoutePoint} objects conflicting with routes of
 	 * other {@link object.TransportAgent} objects.</br>
 	 * Intended for use by the CalculationService.</br>
-	 * <b>Note: this is NOT set or checked by the {@link handler.DatabaseHandler}</b>
+	 * <b>Note: this is NOT set or checked by the {@link service.DatabaseService}</b>
 	 */
+	@XmlElementWrapper(name="conflicts")
+	@XmlElement(name="routepoint", type=RoutePoint.class)
 	private List<RoutePoint> conflicts;
 
 	/**
@@ -69,5 +82,16 @@ public class Route {
 		} else {
 			return route.get(0).getTransportAgentID();
 		}
+	}
+	
+	public String toString() {
+		StringBuilder buf = new StringBuilder();
+		for (RoutePoint routePoint : route) {
+			buf.append("\n" + routePoint);
+	    }
+		for (RoutePoint routePoint : conflicts) {
+			buf.append("\n" + routePoint);
+	    }
+	    return buf.toString();
 	}
 }

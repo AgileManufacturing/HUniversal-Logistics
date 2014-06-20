@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
+	id="WebApp_ID" version="2.5">
+	
+  	<listener>
+    	<listener-class>
+        	com.sun.xml.ws.transport.http.servlet.WSServletContextListener
+     	</listener-class>
+  	</listener>
+  	
+  	<listener>
+    	<listener-class>
+        	servlet.CleanUpListener
+     	</listener-class>
+  	</listener>
+  	
+  	<listener>
+    	<listener-class>
+        	servlet.DiscoveryListener
+     	</listener-class>
+  	</listener>
+  
+  	<servlet>
+    	<servlet-name>database</servlet-name>
+    	<servlet-class>
+    	    com.sun.xml.ws.transport.http.servlet.WSServlet
+     	</servlet-class>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+  	
+  	<servlet-mapping>
+    	<servlet-name>database</servlet-name>
+    	<url-pattern>/database</url-pattern>
+  	</servlet-mapping>
+  	
+  	<resource-ref>
+      	<description>MariaDB DataSource</description>
+      	<res-ref-name>jdbc/logistics</res-ref-name>
+      	<res-type>javax.sql.DataSource</res-type>
+      	<res-auth>Container</res-auth>
+    </resource-ref>
+    
+</web-app>
