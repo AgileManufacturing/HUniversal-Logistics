@@ -1,16 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.io.PrintWriter, java.io.IOException" %>
+<%@ page import="java.io.PrintWriter, java.io.IOException, javax.servlet.jsp.PageContext" %>
 
 <%!
 	String ERROR = "ERROR";
 	String COOKIE_LOGIN = "AgileManufacturingGUILogin";
+	String COOKIE_DOMAIN = "agilemanufacturing.com";
+	String COOKIE_SESSION = "AgileManufacturingGUISession";
+	String SERVER_ADDRESS = "http://127.0.0.1:8080/21_EersteJsp/eerste.jsp";
 	int MODE_LOGIN = 0;
 	int MODE_MAP = 1;
 	int MODE_LIST = 2;
 	int MODE_DETAIL = 3;
 	int MODE_CONTROLS = 4;
 	int MODE_GUI = 5;
+	
+	String _session;
 	
 	
 	int currentMode = 0; 
@@ -20,6 +25,7 @@
 	{
 		String output = "";
 		cookies = request.getCookies();
+		
 		if(cookies == null)
 		{
 			output = ERROR;
@@ -28,13 +34,31 @@
 		{
 			for (Cookie cookieFound : cookies)
 			{
-				if (cookieFound.getName().equals(COOKIE_LOGIN))
+				if (cookieFound.getDomain() != null && cookieFound.getDomain().equals(COOKIE_DOMAIN))
 				{
-					output = cookieFound.getValue();
+					if (cookieFound.getName().equals(COOKIE_LOGIN))
+					{
+						_login = login(cookieFound);
+					}
+					else if (cookieFound.getName().equals(COOKIE_SESSION)) {
+						_session = session(cookieFound);
+					}
 				}
 			}
 		}
 		return output;
+	}
+	
+	private boolean login(Cookie cookie) {
+		//Connect to server and see if this login works
+		
+		return false;
+	}
+	
+	private String session(Cookie cookie) {
+		if (!cookie.getValue().isEmpty())
+			return cookie.getValue();
+		return "";
 	}
 %>
 <head>

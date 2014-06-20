@@ -120,4 +120,11 @@ $(document).ready(function () {
 	$(".navigation").each(function() {
 		$(this).click(function() {selectGUI(this);});
 	});
+	
+	$("#gridStart").click(function() {
+		$.post("http://10.42.0.1:8080/21_EersteJsp/eerste.jsp", { "Excecute command": "Excecute command" },function() {selectGUI(this);},"html");
+	});
+	$("#gridStop").click(function() {
+		$.post("http://10.42.0.1:8080/21_EersteJsp/eerste.jsp", { "Pause command": "Pause command" },function() {selectGUI(this);},"html");
+	});
 });
