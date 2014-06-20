@@ -1,0 +1,127 @@
+body {
+	margin:0px;
+	padding:0px;
+	background-color:#353735;
+}
+#header img {
+	display:inline-block;
+	height:37px;
+	margin:15px;
+}
+#header_container{
+	float:right;
+	display:inline-block;
+	list-style: none; 
+	margin:0;
+	margin-right:15px;
+	margin-top:37px;
+}
+#header_container li {
+	float:right;
+	border-right:1px solid #FAFAFA;
+	padding-right:10px;
+	padding-left:10px;
+}
+#header_container li:first-child {
+	border-right:none;
+}
+ul a, ul li
+{
+	color:white;
+	text-decoration:none;
+	font-family:Arial, Helvetica, sans-serif;
+}
+#header_container li a:hover, #header_container li:hover {
+	text-decoration:underline;
+	color:white;
+}
+#nav {
+	position:absolute;
+	top:68px;
+	bottom:0px;
+	left:0px;
+	width:125px;
+	background-color:#636663;
+}
+#nav .logo{
+	position:relative;
+	display:block;
+	width:60px;
+	margin-top:15px;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:10px;
+}
+#nav ul{
+	display:inline-block;
+	list-style: none; 
+	margin:0;
+	padding:0;
+	padding-left:5px;
+	width:100%;
+	text-align:right;
+}
+#nav li {
+	width:110px;
+	padding:5px;
+	margin-top:5px;
+	padding-right:15px;
+	margin-left:-5px;
+	line-height:25px;
+}
+#nav ul a:hover, #nav ul:hover
+{
+	color:white;
+	text-decoration:none;
+}
+#nav li.selected, #nav li.clicked {
+	background-color:#e69138;
+}
+#nav li:hover {
+	background-color:#969996
+}
+#nav li.selected:hover {
+	background-color:#e69138;
+}
+#content {
+	position:absolute;
+	padding:15px;
+	top:68px;
+	left:135px;
+	right:0px;
+	bottom:0px;
+	background-color:#f5f5f5;
+	overflow:auto;
+}
+#service {
+	position:absolute;
+	top:115px;
+	right:15px;
+	left:15px;
+	bottom:50px;
+	overflow:auto;
+}
+
+.send_container{
+	background-color:#F5F5F5;
+	margin-left:-15px;
+	position:fixed;
+	padding-left:15px;
+	width:100%;
+	padding-top:7px;
+	height:50px;
+	bottom:0px;
+}
+.send_btn {
+	position:relative;
+	display:block;
+	width:200px;	
+}
+#canvas_container {
+	position:relative; 
+	display:block; 
+	float:right;
+	padding:0px;
+	overflow:auto;
+	margin-bottom:30px;
+}
