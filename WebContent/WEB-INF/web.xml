@@ -5,22 +5,6 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
 	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" 
 	id="WebApp_ID" version="2.5">
-	
-<!-- Only necessary for JAX-WS 	
-  	<listener>
-    	<listener-class>
-        	com.sun.xml.ws.transport.http.servlet.WSServletContextListener
-     	</listener-class>
-  	</listener>
-  -->
-
-<!-- Automatically scanned and deployed
-  	<listener>
-    	<listener-class>
-        	servlet.WebsocketInitializer
-     	</listener-class>
-  	</listener>
-  -->
 
   	<listener>
     	<listener-class>
