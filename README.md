@@ -1,11 +1,21 @@
 HUniversal-Logistics
 ====================
 
+To test deploy on Tomcat (tested on Tomcat 7.0.54).
+
+Using Eclipse:
+Window -> Preferences
+Server -> Runtime Environments -> Add
+...
+
 Locations:
 	The database location is set in WebContent/META-INF/context.xml
 	
 	Addresses of other services are found using the DiscoveryTask, these
 	addresses can also directly be set in /config/addresses.properties.
+	This can be used for testing purposes to run two services on the same host, 
+	the DiscoveryTask can't be used to find the services in that case because
+	it can't run two or more instances on the same host and the same port.
 	These addresses are currently not added or updated by the DiscoveryTask.
 	
 	The port used by the DiscoveryTask is set in /config/service.properties
@@ -16,10 +26,6 @@ Servlets:
 
 	CleanupListener is used to deregister JDBC drivers which fail to do this
 	themselves.
-	
-	
-	
-
 
 For improved performance in Tomcat install the Apache Tomcat Native library:
 	libtcnative-1 (http://tomcat.apache.org/download-native.cgi)

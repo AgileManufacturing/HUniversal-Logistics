@@ -17,8 +17,13 @@ import object.Route;
 import object.RoutePoint;
 import object.TransportAgent;
 
-//TODO: javadoc instance for every connection (=client), client state variables
-//TODO: javadoc link to http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm#GKJIQ5
+/**
+ * Server endpoint used for communicating with other services (client endpoints).</br></br>
+ * 
+ * An instance is started for each client. Non-static attributes are thus on a per
+ * client basis. Static variables are the same for all clients.
+ * @see <a href="http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm">http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm</a>
+ */
 @ServerEndpoint(
 		value = "/websocket",
 		encoders = { websocket.MessageTextEncoder.class },
