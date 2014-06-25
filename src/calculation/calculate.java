@@ -22,6 +22,7 @@ public class calculate{
 	calculate(){
 		
 		/* 
+		 * No access to a database yet......
 		 * Hard coded values below :(
 		 * Replace them later
 		 */
@@ -141,17 +142,19 @@ public class calculate{
 		}
 		return true;
 	}
+	
+	
+	
+	ArrayList<ArrayList<Integer>> calculatePath(ArrayList<Integer[]> node_data, int direction, 
+			int path_number, int current_timeframe){
 
-	public ArrayList<ArrayList<Integer>> calculatePath(int[] nodes_to_visit, 
-			int direction, int current_timeframe, int path_number, int deadline){
-		
 		/* Calculates the path from start to end. 
 		 * Needs the direction the transport unit is facing.
 		 * Gets the transport unit from start position
 		 * 
 		   - Create a list of nodes. Used to keep track if a node has been visited. 
 
-		 * 
+		 * (Based uphon A* algoritm)
 		   - Start loop
 		   - Check the neighbors of the current node. 
 		   - Select only the neighbors who have not been visited and who are avaible.
@@ -168,81 +171,93 @@ public class calculate{
 		     The function will then go back to the previous node and re-check. This will be repeated
 		     until a suitable node is found or the list of previous nodes is empty.
 		 */
+
 		
 		/* vars to be "replaced" as soon as the gateway and the database are finished */
 		
+		/* the calulator needs a grid/structure to work with */
 		int grid[] = { 0, 0, 0, 0,
-					   0, 1, 0, 0,
-					   0, 0, 0, 0,
-					   0, 0, 1, 0 };	
-					   
+					   0, 0, 0, 0, /* nodes who are 0 can be visited. */  
+					   0, 0, 0, 0, /* other values will be considered unaccessable */ 
+					   0, 0, 0, 0 };	
+		
+					/*
+					  00 01 02 03
+					  04 05 06 07
+					  08 09 10 11
+					  12 13 14 15
+					*/
+				
+		/* There is no database with planned routes yet so we substitute our own. */			    
 		data = new ArrayList<ArrayList<Integer>>();
-		
 		ArrayList<Integer> data_line;
-		
 		for (int f=0; f<100; f++){
 			data_line = new ArrayList<Integer>();
-			for (int n=0; n<100; n++){
+			for (int n=0; n<20; n++){
 				data_line.add(max+1);
+				
+
+				
 			}
 			data.add(data_line);
 		} 
-					   
-		/* nodes who are 0 can be visited. other values will be considered unaccessable */
-					   
-						/*
-						00 01 02 03
-						04 05 06 07
-						08 09 10 11
-						12 13 14 15
-						*/		
-					
+		
+		
+					   			
 		/* end replacement */		   
 					   
-		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>(); // this list will be filled with paths at the end.
+		
 		
 		for (int h = 0; h < path_number; h++){
-			
+
 			ArrayList<Integer> path = new ArrayList<Integer>();
 			current_frame = current_timeframe; 
 			int previous_node = max;
+			int current_direction = direction;
 			
 			assemble_path:
-			for (int d = 1; d < nodes_to_visit.length; d++){
+			for (int d = 0; d < node_data.size(); d++){
 				
-				int start = nodes_to_visit[d-1];
-				int end = nodes_to_visit[d];
 				
 				/* vars used during runtime */
+
+				Integer[] current_node_data = node_data.get(d);
+				
+				int start = current_node_data[0];
+				int end = current_node_data[1];
+				System.out.println( "start: "+start);
+				System.out.println( "end: "+end);
+				int min_start_frame = current_node_data[2]; // if x is only allowed to start from time y
+				int max_start_frame = current_node_data[3]; // if x is only allowed to start before time z
+				int min_end_frame = current_node_data[4]; // if x is only allowed to end afther time w
+				int deadline = current_node_data[5]; // if x is only allowed to end before time v
 				
 				int visited[] = new int[max];
 				int current_node = start;
 				int next_node = current_node;
-				
 				int wait_frame = 0; 
 
 				/* Copy the grid in the visited list. This list will be updated & checked */
-				 
 				for (int j=0; j<max; j++) {
 					visited[j]=grid[j];
 				}
 				
-				int current_direction = direction;
+				/* If the transport unit is not allowed to move yet, update the path the fit the waiting time */
 				
-				/* Print the frames and the values assigned with the nodes. For debugging only
-
-				for (int f=0; f<lenght*width; f++){
-						for (int n=0; n<width*lenght; n++){
-							std::vector<int> temp = data.at(f);
-							if (temp.at(n) == max+1){
-								std::cout <<  "* ";
-							} else {	
-								std::cout << temp.at(n) << " ";
-							}
-						}
-						std::cout << "\n" << " ";
-				} 
-				*/
+				while (current_frame < min_start_frame){
+					current_frame++;
+					path.add(current_node);
+					System.out.println("derp");
+				}
+				
+				/* If the current frame is already past  */
+				if (current_frame > max_start_frame){
+					/* destination cannot be reached */
+					System.out.println("Destination cannot be reached ");
+					path.clear();
+					break assemble_path;
+				}
 				
 				while(true){
 					
@@ -278,20 +293,21 @@ public class calculate{
 						
 						int neighborint = neighbors.get(g);
 						int neighbor_frames = calculateTimeframes(current_direction, current_node, neighborint);
-						boolean check = nodeWillNotBeUsed(path.size(), neighborint, neighbor_frames);
+						boolean check = nodeWillNotBeUsed(current_frame, neighborint, neighbor_frames);
+						
+						if (neighborint == end &&
+							!nodeWillNotBeUsed(current_frame, current_node, min_end_frame)){
+							check = false;
+						}
 						
 						System.out.println("neighbor " + neighborint + " is found");
 						
 						if (visited[neighborint] == 0 && neighborint != current_node && check == true){
-
 							System.out.println(neighborint + " is not visited");
 							int distance_to_check = calculateDistance(end, neighborint);
-
 							if (distance_to_check <= temp_distance){
 								if (distance_to_check == temp_distance){
-									
 									int currently_planned_frames = calculateTimeframes(current_direction, current_node, next_node);
-								
 									if (neighbor_frames > currently_planned_frames){
 										next_node = next_node;
 									} else {
@@ -304,11 +320,45 @@ public class calculate{
 							}
 						}
 					}
-					
 					visited[current_node] = 1;
 
 					if (visited[end] > 0){
 						//Destination has been reached.
+						System.out.println("current_frame: "+current_frame);
+						//System.out.println("current_frame: "+current_frame);
+						
+						if (current_frame < min_end_frame){
+							int second_to_last;
+							if (path.size() > 0){
+								second_to_last = path.get(path.size()-1);
+							} else {
+								second_to_last = start;
+							}
+							
+							while (current_frame < min_end_frame){
+									current_frame++;
+									path.add(second_to_last);
+							}
+							
+							
+							//if (nodeWillNotBeUsed(current_frame, second_to_last, min_end_frame)){
+							//	System.out.println("node is safe?");
+							//	while (current_frame < min_end_frame){
+							//		current_frame++;
+							//		path.add(second_to_last);
+							//	}
+							//} else {
+							//	System.out.println("node is not safe?");
+							//	
+							//	visited[end] = 0;
+							//	visited[second_to_last] = 1;
+							//	current_node = second_to_last;
+							//	
+							//}
+							 
+
+						}
+						
 						path.add(end);
 						break;
 					}
@@ -364,7 +414,7 @@ public class calculate{
 								//current_frame--;
 								
 							} else {
-								// an impossible location is added when the destination cannot be reached
+								// destination cannot be reached
 								System.out.println("Destination cannot be reached ");
 								path.clear();
 								break assemble_path;
@@ -373,21 +423,6 @@ public class calculate{
 						}
 					}
 				}
-			
-				/* Print the frames and the values assigned with the nodes. For debugging only
-				for (int f=0; f<lenght*width; f++){
-					for (int n=0; n<width*lenght; n++){
-						std::vector<int> temp = data.at(f);
-						
-						if (temp.at(n) == max+1){
-							std::cout <<  "* ";
-						} else {	
-							std::cout << temp.at(n) << " ";
-						}
-					}
-					std::cout << "\n";
-				} 
-				*/
 			}
 			
 			if (path.size() > 0){
@@ -406,6 +441,19 @@ public class calculate{
 				temp_list.set(node, node);
 				data.set(frame, temp_list);
 			}
+			
+			for (int derp = 0; derp < data.size(); derp++){
+				ArrayList<Integer> temp_list = data.get(derp);
+				for (int herp = 0; herp < temp_list.size(); herp++){
+					System.out.print(temp_list.get(herp)+" ");
+				}
+				System.out.println();
+			}
+			
+			//ystem.out.println(
+			
+			
+			
 		}
 		return list;
 	}
