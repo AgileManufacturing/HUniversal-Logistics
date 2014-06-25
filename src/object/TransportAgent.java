@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType
-public class TransportUnit {
+public class TransportAgent {
 	/**
 	 * The ID of the transport agent.
 	 */
@@ -90,14 +90,14 @@ public class TransportUnit {
 	/**
 	 * param transportAgentID The ID of the transport agent.
 	 */	
-	public TransportUnit() {
+	public TransportAgent() {
 		this(-1);
 	}
 	
 	/**
 	 * param transportAgentID The ID of the transport agent.
 	 */	
-	public TransportUnit(int transportAgentID) {
+	public TransportAgent(int transportAgentID) {
 		this.setTransportAgentID(transportAgentID);
 		this.setMaxFramesMoveOneCellForward(-1);
 		this.setMaxFramesMoveOneCellBackward(-1);

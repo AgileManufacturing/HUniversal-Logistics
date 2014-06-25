@@ -8,6 +8,9 @@ import javax.websocket.EndpointConfig;
 
 import com.google.gson.Gson;
 
+/**
+ * Used to encode a {@link websocket.Message} to text.
+ */
 public class MessageTextEncoder implements Encoder.Text<websocket.Message>{
 	private static Logger logger = Logger.getLogger(MessageTextEncoder.class.getName());
 	private String packagename = "object";

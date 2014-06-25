@@ -15,7 +15,7 @@ import object.Cell;
 import object.GridPoint;
 import object.Route;
 import object.RoutePoint;
-import object.TransportUnit;
+import object.TransportAgent;
 
 //TODO: javadoc instance for every connection (=client), client state variables
 //TODO: javadoc link to http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm#GKJIQ5
@@ -51,7 +51,7 @@ public class GatewayServerEndpoint {
     		System.out.println(((RoutePoint) message.getObject()).toString());
     		break;
     	case "object.TransportUnit":
-    		System.out.println(((TransportUnit) message.getObject()).toString());
+    		System.out.println(((TransportAgent) message.getObject()).toString());
     		break;
     	}
 		

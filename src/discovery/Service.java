@@ -2,7 +2,6 @@ package discovery;
 
 public enum Service {
 	GATEWAY("gateway"),
-	DATABASE("database"),
 	GUI("gui"),
 	TRANSPORTUNIT("transportUnit");
 	
