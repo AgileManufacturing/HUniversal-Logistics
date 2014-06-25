@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Cave_Johnson</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Mobile Paralax Controller</string>
     <string name="action_settings">Settings</string>
 
 </resources>
