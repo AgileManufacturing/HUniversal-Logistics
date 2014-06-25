@@ -1,4 +1,4 @@
-package servlet;
+package discovery;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,10 +19,19 @@ import java.util.logging.Logger;
  * responding to requests for the address of this web service or the addresses of
  * web services known by this web service.</br>
  * Uses /config/service.properties to store settings.</br>
+ * Uses /config/addresses.properties to store ip addresses.
  * This class is a singleton and can not be constructed directly.
  */
 public class DiscoveryTask {
 	private static Logger logger = Logger.getLogger(DiscoveryTask.class.getName());
+	/**
+	 * The path of the ip addresses file in the format modified_package_name/name
+	 * ("." in the package name should be replaced with "/").</br>
+	 * TODO: Currently read-only, should be writeable as well,
+	 * see also addAddress() and removeAddress().
+	 */
+	private static final String addressesPath = "/config/addresses.properties";
+	
 	/**
 	 * The path of the configuration file in the format modified_package_name/name
 	 * ("." in the package name should be replaced with "/").
@@ -30,7 +39,7 @@ public class DiscoveryTask {
 	private static final String propertiesPath = "/config/service.properties";
 	
 	/**
-	 * The instance of {@link servlet.DiscoveryTask}.
+	 * The instance of {@link discovery.DiscoveryTask}.
 	 */
 	private static DiscoveryTask instance;
 	
@@ -51,13 +60,13 @@ public class DiscoveryTask {
 	private DatagramSocket socket;
 	
 	/**
-	 * The instance of {@link servlet.DiscoveryRequestThread} used to send
+	 * The instance of {@link discovery.DiscoveryRequestThread} used to send
 	 * requests.
 	 */
 	private DiscoveryRequestThread discoveryRequestThread;
 	
 	/**
-	 * The instance of {@link servlet.DiscoveryResponseThread} used to
+	 * The instance of {@link discovery.DiscoveryResponseThread} used to
 	 * receive requests and send responses.
 	 */
 	private DiscoveryResponseThread discoveryResponseThread;
@@ -92,18 +101,19 @@ public class DiscoveryTask {
 		this.running = false;
 		this.addresses = new HashMap<String, List<String>>();
 		this.socket = null;
-		Properties prop = new Properties();
+		Properties serviceProp = new Properties();
+		Properties addressesProp = new Properties();
 		InputStream input = null;
 		String tmpport = null;
 		String tmpwait = null;
 		try {
 			input = this.getClass().getResourceAsStream(propertiesPath);
-			prop.load(input);		
+			serviceProp.load(input);		
 			
-			tmpwait = prop.getProperty("requestWaitMs", "");
-			tmpport = prop.getProperty("port", "");
-			this.serviceType = prop.getProperty("serviceType", "");
-			this.requiredServices = Arrays.asList(prop.getProperty(serviceType, "").split(","));
+			tmpwait = serviceProp.getProperty("requestWaitMs", "");
+			tmpport = serviceProp.getProperty("port", "");
+			this.serviceType = serviceProp.getProperty("serviceType", "");
+			this.requiredServices = Arrays.asList(serviceProp.getProperty(serviceType, "").split(","));
 			
 			if (tmpwait.equals("")) {
 				logger.severe("requestWaitMs key is missing or empty in " + propertiesPath);
@@ -129,9 +139,25 @@ public class DiscoveryTask {
 		} catch (IOException e) {
 			logger.severe("Could not open " + propertiesPath + " (" + e.getMessage() + ")");
 		}
+		
 		this.discoveryRequestThread = new DiscoveryRequestThread(this, requestWaitMs);
 		this.discoveryResponseThread = new DiscoveryResponseThread(this);
-		logger.info("Service " + serviceType + " started on port " + port + ", required services " + Arrays.toString(requiredServices.toArray()));
+		
+		try {
+			input = this.getClass().getResourceAsStream(addressesPath);
+			addressesProp.load(input);
+			
+			for (Service service : Service.values()) {
+				String address = addressesProp.getProperty(service.toString(), "");
+				if (!address.equals("")) {
+					this.addAddress(service.toString(), address);
+				}
+			}
+		} catch (IOException e) {
+			logger.severe("Could not open " + addressesPath + " (" + e.getMessage() + ")");
+		}
+		
+		logger.info("Discovery service for " + serviceType + " started on port " + port + ", required services " + Arrays.toString(requiredServices.toArray()));
 	}
 	
 	/**
@@ -269,21 +295,30 @@ public class DiscoveryTask {
 	}
 	
 	/**
-	 * Add an addresses for a given service type.
+	 * Add an addresses for a given service type.</br>
+	 * TODO: store address to a file
 	 * @param serviceType The service type for which to add an address.
 	 * @param address The address to add.
 	 */
 	public void addAddress(String serviceType, String address) {
-		addresses.get(serviceType).add(address.trim());
+		synchronized (addresses) {
+			if (!addresses.containsKey(serviceType)) {
+				addresses.put(serviceType, new ArrayList<String>());
+			}
+			addresses.get(serviceType).add(address.trim());
+		}	
 	}
 	
 	/**
-	 * Remove an addresses for a given service type.
+	 * Remove an addresses for a given service type.</br>
+	 * TODO: remove address to a file
 	 * @param serviceType The service type from which to remove an address.
 	 * @param address The address to remove.
 	 */
 	public void removeAddress(String serviceType, String address) {
-		addresses.get(serviceType).remove(address.trim());
+		synchronized (addresses) {
+			addresses.get(serviceType).remove(address.trim());
+		}
 	}
 	
 	/**

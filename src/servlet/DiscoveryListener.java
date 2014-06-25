@@ -5,8 +5,10 @@ import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
+import discovery.DiscoveryTask;
+
 /**
- * Starts an instance of {@link servlet.DiscoveryTask} during startup
+ * Starts an instance of {@link discovery.DiscoveryTask} during startup
  * and stops this instance during shutdown.
  */
 public class DiscoveryListener implements ServletContextListener  {

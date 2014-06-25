@@ -1,4 +1,4 @@
-package servlet;
+package discovery;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -14,13 +14,13 @@ import java.util.logging.Logger;
 /**
  * Sends requests for web services which are required but which do not have
  * a known address. Responses to these requests are handled by
- * {@link servlet.DiscoveryResponseThread}.
+ * {@link discovery.DiscoveryResponseThread}.
  */
 public class DiscoveryRequestThread implements Runnable {
 	private static Logger logger = Logger.getLogger(DiscoveryRequestThread.class.getName());
 	
 	/**
-	 * The instance of {@link servlet.DiscoveryTask}.
+	 * The instance of {@link discovery.DiscoveryTask}.
 	 */
 	private DiscoveryTask discoveryTask;
 	

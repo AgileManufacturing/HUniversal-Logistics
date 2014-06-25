@@ -1,4 +1,4 @@
-package servlet;
+package discovery;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
@@ -8,13 +8,13 @@ import java.util.logging.Logger;
 /**
  * Receives requests and sends responses depending on whether the address asked
  * for is known. Also handles responses on requests send by
- * {@link servlet.DiscoveryRequestThread}.
+ * {@link discovery.DiscoveryRequestThread}.
  */
 public class DiscoveryResponseThread implements Runnable {
 	private static Logger logger = Logger.getLogger(DiscoveryResponseThread.class.getName());
 	
 	/**
-	 * The instance of {@link servlet.DiscoveryTask}.
+	 * The instance of {@link discovery.DiscoveryTask}.
 	 */
 	private DiscoveryTask discoveryTask;
 	
@@ -81,6 +81,9 @@ public class DiscoveryResponseThread implements Runnable {
 				}
 				if (msgArray.length >= 3) {
 					addresses = Arrays.copyOfRange(msgArray, 3, msgArray.length);
+				}
+				if (action == null) { // skip packet if no action available
+					continue;
 				}
 				
 				byte[] sendData = null;
