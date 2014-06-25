@@ -47,7 +47,7 @@ public class MessageTextDecoder implements Decoder.Text<websocket.Message> {
 				logger.severe("Could not decode message (" + e.getMessage() + ")");
 			}
 			Object object = new Gson().fromJson(objectJson, cls);
-			message = new Message(classname, object);
+			message = new Message(object);
 		}
 		return message;
 	}

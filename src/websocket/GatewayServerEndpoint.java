@@ -11,6 +11,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
+import object.Cell;
+import object.GridPoint;
+import object.Route;
+import object.RoutePoint;
+import object.TransportUnit;
+
 //TODO: javadoc instance for every connection (=client), client state variables
 //TODO: javadoc link to http://docs.oracle.com/javaee/7/tutorial/doc/websocket.htm#GKJIQ5
 @ServerEndpoint(
@@ -33,9 +39,21 @@ public class GatewayServerEndpoint {
 
 		switch (message.getClassname()) {
     	case "object.Cell":
-    		// do something for each possible object
+    		System.out.println(((Cell) message.getObject()).toString());
     		break;
-    	} // also for object.Route, object.TransportAgent, etc
+    	case "object.GridPoint":
+    		System.out.println(((GridPoint) message.getObject()).toString());
+    		break;
+    	case "object.Route":
+    		System.out.println(((Route) message.getObject()).toString());
+    		break;
+    	case "object.RoutePoint":
+    		System.out.println(((RoutePoint) message.getObject()).toString());
+    		break;
+    	case "object.TransportUnit":
+    		System.out.println(((TransportUnit) message.getObject()).toString());
+    		break;
+    	}
 		
 		if (response != null) {
 			session.getAsyncRemote().sendObject(response);

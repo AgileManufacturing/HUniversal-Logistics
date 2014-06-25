@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Represents a route in a grid by a {@link object.TransportAgent} object.
+ * Represents a route in a grid by a {@link object.TransportUnit} object.
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType
@@ -23,7 +23,7 @@ public class Route {
 	
 	/**
 	 * The list of {@link object.RoutePoint} objects conflicting with routes of
-	 * other {@link object.TransportAgent} objects.</br>
+	 * other {@link object.TransportUnit} objects.</br>
 	 * Intended for use by the CalculationService.</br>
 	 * <b>Note: this is NOT set or checked by the {@link service.DatabaseService}</b>
 	 */
@@ -74,7 +74,7 @@ public class Route {
 	}
 	
 	/**
-	 * @return The ID of the {@link object.TransportAgent}
+	 * @return The ID of the {@link object.TransportUnit}
 	 */
 	public int getTransportAgentID() {
 		if (route.isEmpty()) {

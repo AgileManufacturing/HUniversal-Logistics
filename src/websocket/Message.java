@@ -6,8 +6,8 @@ public class Message {
 	private Object object;
 	//TODO: maybe also "private String action" (insert, update, remove, etc)
 	
-	public Message(String classname, Object object) {
-		this.classname = classname;
+	public Message(Object object) {
+		this.classname = object.getClass().getName();
 		this.object = object;
 	}
 	
